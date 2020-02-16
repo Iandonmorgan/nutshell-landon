@@ -5,7 +5,7 @@ const htmlEvent = (eventEntry) => {
   <div>${eventEntry.location}</div>
   <div>${eventEntry.address}</div>
   <div>${eventEntry.city}, ${eventEntry.state}</div>
-  <div>${eventEntry.zip}</div>
+  <div>${eventEntry.zipCode}</div>
   `
 };
 
