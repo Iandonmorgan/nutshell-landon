@@ -3,7 +3,6 @@ import API from "../data.js";
 
 const eventListeners = {
 
-
   saveEvent() {
     const targetDomContainer = document.getElementById("eventsSubmitButton");
 
@@ -45,8 +44,6 @@ const eventListeners = {
         eventListeners.updateEventFormFields(eventToEdit)
       }
     })
-
-
   },
   updateEventFormFields(eventId) {
     const targetNameInput = document.getElementById("nameInputEvents");
@@ -70,7 +67,19 @@ const eventListeners = {
         targetStateInput.value = event.state;
         targetZipInput.value = event.zipCode;
       })
+  },
+  deleteEvent() {
+    const targetDom = document.getElementById("printLocationEvents");
 
+targetDom.addEventListener("click", event => {
+  if(event.target.id.startsWith("deleteButtonEvents")) {
+    const eventToDelete = event.target.id.split("--")[1];
+
+    API.delete(eventToDelete, "events")
+    .then(() => API.get("events").then(renderHtmlEvents))
+    
+  }
+})
   },
   clearForm() {
     const targetNameInput = document.getElementById("nameInputEvents");
