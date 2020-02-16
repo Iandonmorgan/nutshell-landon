@@ -29,8 +29,18 @@ const eventListeners = {
         "zipCode": targetZipInput.value
       }
 
+      if (targetHiddenIdInput.value === "") {
+
       API.save(eventsEntry, "events").then(() => API.get("events").then(renderHtmlEvents))
         .then(eventListeners.clearForm)
+
+      } else {
+
+        eventsEntry.id = parseInt(targetHiddenIdInput.value);
+        API.update(eventsEntry, "events")
+        .then(() => API.get("events").then(renderHtmlEvents))
+        .then(eventListeners.clearForm)
+      }
     })
 
   },
