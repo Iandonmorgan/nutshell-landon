@@ -12,4 +12,15 @@ const newTaskObj = (val1, val2) => {
     
 }
 
-export {newTaskObj}
+const taskListFactory = (obj) => {
+    return `
+        <section id="task-container">
+            <h2>Task Name: ${obj.name}</h2>
+            <h2>Expected Completion Date: ${obj.deadline}</h2>
+            <input type="checkbox" name="completed" value="Complete" id="checkbox">
+            <label for="completed">Complete</label>
+        </section>
+    `
+}
+
+export {newTaskObj, taskListFactory}

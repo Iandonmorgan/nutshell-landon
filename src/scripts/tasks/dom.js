@@ -11,6 +11,7 @@ const renderForm = () => {
             <input type="date" id="completionDate">
         </form>
         <button id="submitTask">Save Task</button>
+        <button id="viewTasks">View Tasks</button>
     `
 }
 
