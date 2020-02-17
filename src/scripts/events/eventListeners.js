@@ -3,54 +3,57 @@ import API from "../data.js";
 
 const eventListeners = {
 
+  printForm() {
+    const targetFormLocation = document.getElementById("entryFormEvents");
+    console.log(targetFormLocation)
+    const eventsFormHtml = ` <div id="populateForm">
+    
+    <div id="nameInputDivEvents">
+      <label id="nameLabelEvents" for="nameLabelEvents">Event: </label>
+      <input id="nameInputEvents" type="text" name="nameInputEvents">
+    </div>
+    <div id="dateInputDivEvents">
+      <label id="dateLabelEvents" for="dateLabelEvents"></label>
+      <input id="dateInputEvents" type="date" name="dateInputEvents">
+    </div>
+    <div id="locationInputDivEvents">
+      <label id="locationLabelEvents" for="locationLabelEvents">Location: </label>
+      <input id="locationInputEvents" type="text" name="locationInputEvents">
+    </div>
+    <div id="addressInputDivEvents">
+      <label id="addressLabelEvents" for="addressLabelEvents">Street Address: </label>
+      <input id="addressInputEvents" type="text" name="addressInputEvents">
+    </div>
+    <div id="cityInputDivEvents">
+      <label id="cityLabelEvents" for="cityLabelEvents">City: </label>
+      <input id="cityInputEvents" type="text" name="cityInputEvents">
+    </div>
+    <div id="stateInputDivEvents">
+      <label id="stateLabelEvents" for="stateLabelEvents">State: </label>
+      <input id="stateInputEvents" type="text" name="stateInputEvents">
+    </div>
+    <div id="zipInputDivEvents">
+      <label id="zipLabelEvents" for="zipLabelEvents">Zip Code: </label>
+      <input id="zipInputEvents" type="text" name="zipInputEvents">
+    </div>
+    <div id="buttonDivEvents">
+      <button type="button" id="eventsSubmitButton">Submit to a Higher Power</button>
+      <button type="button" id="cancelButtonEvents">Cancel Culture</button>
+    </div>
+  </div>
+</div>
+`
+targetFormLocation.innerHTML = eventsFormHtml
+      eventListeners.saveEvent();
+      eventListeners.cancel();
+  },
+
   newEvent() {
     const targetNewEventButton = document.getElementById("newEventButton");
 
     targetNewEventButton.addEventListener("click", () => {
-      console.log("clicked")
-      const targetFormLocation = document.getElementById("entryFormEvents");
-      console.log(targetFormLocation)
-      const eventsFormHtml = ` <div id="populateForm">
-      <input type="hidden" id="hiddenUserId" value="1">
-      <input type="hidden" id="hiddenInputEvents" value="">
-      <div id="nameInputDivEvents">
-        <label id="nameLabelEvents" for="nameLabelEvents">Event: </label>
-        <input id="nameInputEvents" type="text" name="nameInputEvents">
-      </div>
-      <div id="dateInputDivEvents">
-        <label id="dateLabelEvents" for="dateLabelEvents"></label>
-        <input id="dateInputEvents" type="date" name="dateInputEvents">
-      </div>
-      <div id="locationInputDivEvents">
-        <label id="locationLabelEvents" for="locationLabelEvents">Location: </label>
-        <input id="locationInputEvents" type="text" name="locationInputEvents">
-      </div>
-      <div id="addressInputDivEvents">
-        <label id="addressLabelEvents" for="addressLabelEvents">Street Address: </label>
-        <input id="addressInputEvents" type="text" name="addressInputEvents">
-      </div>
-      <div id="cityInputDivEvents">
-        <label id="cityLabelEvents" for="cityLabelEvents">City: </label>
-        <input id="cityInputEvents" type="text" name="cityInputEvents">
-      </div>
-      <div id="stateInputDivEvents">
-        <label id="stateLabelEvents" for="stateLabelEvents">State: </label>
-        <input id="stateInputEvents" type="text" name="stateInputEvents">
-      </div>
-      <div id="zipInputDivEvents">
-        <label id="zipLabelEvents" for="zipLabelEvents">Zip Code: </label>
-        <input id="zipInputEvents" type="text" name="zipInputEvents">
-      </div>
-      <div id="buttonDivEvents">
-        <button type="button" id="eventsSubmitButton">Submit to a Higher Power</button>
-        <button type="button" id="cancelButtonEvents">Cancel Culture</button>
-      </div>
-    </div>
-  </div>
-`
-      targetFormLocation.innerHTML = eventsFormHtml
-      eventListeners.saveEvent();
-      eventListeners.cancelButton();
+      console.log("newEvent Clicked")
+      eventListeners.printForm();
 
     })
   },
@@ -95,28 +98,38 @@ const eventListeners = {
       }
     })
   },
+  cancel() {
+    const targetButtonDiv = document.getElementById("buttonDivEvents");
+
+    targetButtonDiv.addEventListener("click", event => {
+
+      if (event.target.id.startsWith("cancelButton")) {
+        console.log("clicked cancel")
+        eventListeners.clearForm();
+
+      }
+    })
+  },
   editEvent() {
+
+    
+    
     const targetDom = document.getElementById("printLocationEvents");
 
     targetDom.addEventListener("click", event => {
       if (event.target.id.startsWith("editButtonEvents--")) {
+
+        eventListeners.printForm();
         const eventToEdit = event.target.id.split("--")[1];
 
         eventListeners.updateEventFormFields(eventToEdit);
 
         const cancelButton = `<button type="button" id="cancelButtonEvents">Cancel Culture</button>`
         const targetButtonDiv = document.getElementById("buttonDivEvents");
-        targetButtonDiv.innerHTML += cancelButton;
+        eventListeners.printForm
+        eventListeners.updateEventFormFields(eventToEdit)
 
-        targetButtonDiv.addEventListener("click", event => {
-
-          if (event.target.id.startsWith("cancelButton")) {
-            console.log("clicked cancel")
-            eventListeners.clearForm();
-            targetButtonDiv.innerHTML = `<button type="button" id="eventsSubmitButton">Submit to a Higher Power</button>`
-
-          }
-        })
+        
       }
     })
   },
@@ -156,23 +169,27 @@ const eventListeners = {
     })
   },
   clearForm() {
-    const targetNameInput = document.getElementById("nameInputEvents");
-    const targetDateInput = document.getElementById("dateInputEvents");
-    const targetLocationInput = document.getElementById("locationInputEvents");
-    const targetAddressInput = document.getElementById("addressInputEvents");
-    const targetCityInput = document.getElementById("cityInputEvents");
-    const targetStateInput = document.getElementById("stateInputEvents");
-    const targetZipInput = document.getElementById("zipInputEvents");
-    const targetHiddenIdInput = document.getElementById("hiddenInputEvents");
+    // const targetNameInput = document.getElementById("nameInputEvents");
+    // const targetDateInput = document.getElementById("dateInputEvents");
+    // const targetLocationInput = document.getElementById("locationInputEvents");
+    // const targetAddressInput = document.getElementById("addressInputEvents");
+    // const targetCityInput = document.getElementById("cityInputEvents");
+    // const targetStateInput = document.getElementById("stateInputEvents");
+    // const targetZipInput = document.getElementById("zipInputEvents");
+    // const targetHiddenIdInput = document.getElementById("hiddenInputEvents");
 
-    targetNameInput.value = ""
-    targetDateInput.value = ""
-    targetLocationInput.value = ""
-    targetAddressInput.value = ""
-    targetCityInput.value = ""
-    targetStateInput.value = ""
-    targetZipInput.value = ""
-    targetHiddenIdInput.value = ""
+    // targetNameInput.value = ""
+    // targetDateInput.value = ""
+    // targetLocationInput.value = ""
+    // targetAddressInput.value = ""
+    // targetCityInput.value = ""
+    // targetStateInput.value = ""
+    // targetZipInput.value = ""
+    // targetHiddenIdInput.value = ""
+
+    const targetDom = document.getElementById("entryFormEvents");
+    targetDom.innerHTML = `<button type="button" id="newEventButton">New Event</button>`
+    eventListeners.newEvent();
   }
 }
 
