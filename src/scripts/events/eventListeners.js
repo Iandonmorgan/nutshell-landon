@@ -3,6 +3,58 @@ import API from "../data.js";
 
 const eventListeners = {
 
+  newEvent() {
+    const targetNewEventButton = document.getElementById("newEventButton");
+
+    targetNewEventButton.addEventListener("click", () => {
+      console.log("clicked")
+      const targetFormLocation = document.getElementById("entryFormEvents");
+      console.log(targetFormLocation)
+      const eventsFormHtml = ` <div id="populateForm">
+      <input type="hidden" id="hiddenUserId" value="1">
+      <input type="hidden" id="hiddenInputEvents" value="">
+      <div id="nameInputDivEvents">
+        <label id="nameLabelEvents" for="nameLabelEvents">Event: </label>
+        <input id="nameInputEvents" type="text" name="nameInputEvents">
+      </div>
+      <div id="dateInputDivEvents">
+        <label id="dateLabelEvents" for="dateLabelEvents"></label>
+        <input id="dateInputEvents" type="date" name="dateInputEvents">
+      </div>
+      <div id="locationInputDivEvents">
+        <label id="locationLabelEvents" for="locationLabelEvents">Location: </label>
+        <input id="locationInputEvents" type="text" name="locationInputEvents">
+      </div>
+      <div id="addressInputDivEvents">
+        <label id="addressLabelEvents" for="addressLabelEvents">Street Address: </label>
+        <input id="addressInputEvents" type="text" name="addressInputEvents">
+      </div>
+      <div id="cityInputDivEvents">
+        <label id="cityLabelEvents" for="cityLabelEvents">City: </label>
+        <input id="cityInputEvents" type="text" name="cityInputEvents">
+      </div>
+      <div id="stateInputDivEvents">
+        <label id="stateLabelEvents" for="stateLabelEvents">State: </label>
+        <input id="stateInputEvents" type="text" name="stateInputEvents">
+      </div>
+      <div id="zipInputDivEvents">
+        <label id="zipLabelEvents" for="zipLabelEvents">Zip Code: </label>
+        <input id="zipInputEvents" type="text" name="zipInputEvents">
+      </div>
+      <div id="buttonDivEvents">
+        <button type="button" id="eventsSubmitButton">Submit to a Higher Power</button>
+        <button type="button" id="cancelButtonEvents">Cancel Culture</button>
+      </div>
+    </div>
+  </div>
+`
+      targetFormLocation.innerHTML = eventsFormHtml
+      eventListeners.saveEvent();
+      eventListeners.cancelButton();
+
+    })
+  },
+
   saveEvent() {
     const targetDomContainer = document.getElementById("eventsSubmitButton");
 
@@ -31,15 +83,15 @@ const eventListeners = {
 
       if (targetHiddenIdInput.value === "") {
 
-      API.save(eventsEntry, "events").then(() => API.get("events").then(renderHtmlEvents))
-        .then(eventListeners.clearForm)
+        API.save(eventsEntry, "events").then(() => API.get("events").then(renderHtmlEvents))
+          .then(eventListeners.clearForm)
 
       } else {
 
         eventsEntry.id = parseInt(targetHiddenIdInput.value);
         API.update(eventsEntry, "events")
-        .then(() => API.get("events").then(renderHtmlEvents))
-        .then(eventListeners.clearForm)
+          .then(() => API.get("events").then(renderHtmlEvents))
+          .then(eventListeners.clearForm)
       }
     })
   },
@@ -57,12 +109,12 @@ const eventListeners = {
         targetButtonDiv.innerHTML += cancelButton;
 
         targetButtonDiv.addEventListener("click", event => {
-          
+
           if (event.target.id.startsWith("cancelButton")) {
             console.log("clicked cancel")
             eventListeners.clearForm();
             targetButtonDiv.innerHTML = `<button type="button" id="eventsSubmitButton">Submit to a Higher Power</button>`
-            
+
           }
         })
       }
@@ -93,15 +145,15 @@ const eventListeners = {
   deleteEvent() {
     const targetDom = document.getElementById("printLocationEvents");
 
-targetDom.addEventListener("click", event => {
-  if(event.target.id.startsWith("deleteButtonEvents")) {
-    const eventToDelete = event.target.id.split("--")[1];
+    targetDom.addEventListener("click", event => {
+      if (event.target.id.startsWith("deleteButtonEvents")) {
+        const eventToDelete = event.target.id.split("--")[1];
 
-    API.delete(eventToDelete, "events")
-    .then(() => API.get("events").then(renderHtmlEvents))
-    
-  }
-})
+        API.delete(eventToDelete, "events")
+          .then(() => API.get("events").then(renderHtmlEvents))
+
+      }
+    })
   },
   clearForm() {
     const targetNameInput = document.getElementById("nameInputEvents");
