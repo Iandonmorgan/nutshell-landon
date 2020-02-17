@@ -22,7 +22,7 @@ const articleHTMLManager = {
         
     `;
   },
-  makeJournalEntryComponent: newsArticle => {
+  makeNewsArticleComponent: newsArticle => {
     return `
       <h1>${newsArticle.title}</h1>
       <section>${newsArticle.synopsis}</section>
