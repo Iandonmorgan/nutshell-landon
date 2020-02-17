@@ -23,13 +23,16 @@ const addSaveFunctionality = () => {
             const dateVal = document.querySelector("#completionDate").value
         
             const newObj = newTaskObj(taskVal, dateVal)
-            console.log(newObj)
         
             API.save(newObj, "tasks")
         })
     }
 }
 
+// So this fn renders data to DOM, now need to work on checkbox btn click...
+// Should you do an if/else that checks if the checkbox has been clicked?
+// Need to do a PUT req to change the isComplete property value when checkbox
+// clicked....
 const addViewTasksFunctionality = () => {
     const viewTasksBtn = document.querySelector("#viewTasks")
 
