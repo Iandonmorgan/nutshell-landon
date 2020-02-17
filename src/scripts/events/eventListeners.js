@@ -50,7 +50,21 @@ const eventListeners = {
       if (event.target.id.startsWith("editButtonEvents--")) {
         const eventToEdit = event.target.id.split("--")[1];
 
-        eventListeners.updateEventFormFields(eventToEdit)
+        eventListeners.updateEventFormFields(eventToEdit);
+
+        const cancelButton = `<button type="button" id="cancelButtonEvents">Cancel Culture</button>`
+        const targetButtonDiv = document.getElementById("buttonDivEvents");
+        targetButtonDiv.innerHTML += cancelButton;
+
+        targetButtonDiv.addEventListener("click", event => {
+          
+          if (event.target.id.startsWith("cancelButton")) {
+            console.log("clicked cancel")
+            eventListeners.clearForm();
+            targetButtonDiv.innerHTML = `<button type="button" id="eventsSubmitButton">Submit to a Higher Power</button>`
+            
+          }
+        })
       }
     })
   },

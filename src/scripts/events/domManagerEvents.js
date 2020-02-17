@@ -1,5 +1,6 @@
 const htmlEvent = (eventEntry) => {
   return `
+  <input type="hidden" id="hidden--${eventEntry.userId}"/>
   <div>${eventEntry.name}</div>
   <div>${eventEntry.date}</div>
   <div>${eventEntry.location}</div>
