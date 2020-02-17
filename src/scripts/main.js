@@ -1,7 +1,4 @@
-import API from "./data.js";
-import chatMessages from "./messages/domManagerMessages.js"
-
-const activeUserId = 5;
+import messagesListeners from "./messages/messagesEventListeners.js";
 
 /*
     Import all the tools into main.js that are needed to display
@@ -9,4 +6,4 @@ const activeUserId = 5;
     or the dashboard should be rendered.
 */
 
-chatMessages.logInListener();
+messagesListeners.logInListener();
