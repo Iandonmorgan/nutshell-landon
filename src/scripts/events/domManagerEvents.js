@@ -17,21 +17,15 @@ const renderHtmlEvents = (events) => {
 
   targetDom.innerHTML = "";
 
-  const newArray = events.map(object =>  object.date);
-  console.log(newArray);
+  events.sort((a,b) => Date.parse(b.date) - Date.parse(a.date))
+  console.log(events)
 
-  
-  
-  
-  
+  const soonestToLatest = events.reverse();
+  console.log(soonestToLatest);
 
-  // for(let i = 0 ; i < events.length ; i++) {
-  //   const date = Date.parse(events[i].date)
-  //   if (
-  // }
-  // sortedArray.forEach(event => {
-  // targetDom.innerHTML += htmlEvent(event)    
-  // });
+  soonestToLatest.forEach(element => {
+    targetDom.innerHTML += htmlEvent(element)
+  });
 }
 
 export default renderHtmlEvents
