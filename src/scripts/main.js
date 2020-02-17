@@ -1,4 +1,5 @@
 import API from "./data.js";
+import {renderForm} from "./tasks/dom.js"
 
 /*
     Import all the tools into main.js that are needed to display
@@ -12,3 +13,6 @@ API.get("articles").then(objects => console.log(objects));
 API.get("friendships").then(objects => console.log(objects));
 API.get("tasks").then(objects => console.log(objects));
 API.get("users").then(objects => console.log(objects));
+
+// adding dynamic tasks form to DOM - Tyler
+renderForm();
