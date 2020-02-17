@@ -10,7 +10,62 @@
 </head>
 
 <body>
-  <article id="container"></article>
+  <article id="container">
+
+    <div id="containerEvents">
+      <div id="entryFormEvents">
+
+        <input type="hidden" id="hiddenUserId" value="1">
+
+        <input type="hidden" id="hiddenInputEvents" value="">
+
+        <div id="nameInputDivEvents">
+          <label id="nameLabelEvents" for="nameLabelEvents">Event: </label>
+          <input id="nameInputEvents" type="text" name="nameInputEvents">
+        </div>
+
+        <div id="dateInputDivEvents">
+          <label id="dateLabelEvents" for="dateLabelEvents"></label>
+          <input id="dateInputEvents" type="date" name="dateInputEvents">
+        </div>
+
+        <div id="locationInputDivEvents">
+          <label id="locationLabelEvents" for="locationLabelEvents">Location: </label>
+          <input id="locationInputEvents" type="text" name="locationInputEvents">
+        </div>
+
+        <div id="addressInputDivEvents">
+          <label id="addressLabelEvents" for="addressLabelEvents">Street Address: </label>
+          <input id="addressInputEvents" type="text" name="addressInputEvents">
+        </div>
+
+        <div id="cityInputDivEvents">
+          <label id="cityLabelEvents" for="cityLabelEvents">City: </label>
+          <input id="cityInputEvents" type="text" name="cityInputEvents">
+        </div>
+
+        <div id="stateInputDivEvents">
+          <label id="stateLabelEvents" for="stateLabelEvents">State: </label>
+          <input id="stateInputEvents" type="text" name="stateInputEvents">
+        </div>
+
+        <div id="zipInputDivEvents">
+          <label id="zipLabelEvents" for="zipLabelEvents">Zip Code: </label>
+          <input id="zipInputEvents" type="text" name="zipInputEvents">
+        </div>
+
+        <button type="button" id="eventsSubmitButton">Emboss Eternity</button>
+      </div>
+
+      <div id="printLocationEvents">
+
+      </div>
+    </div>
+
+  </article>
+
+  <script type="module" src="scripts/events/events.js"></script>
+
   <script type="module" src="scripts/main.js"></script>
 </body>
 

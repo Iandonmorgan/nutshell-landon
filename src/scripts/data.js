@@ -1,7 +1,3 @@
-/* 
-Code that deals with getting the data.
-*/
-
 const apiURL = "http://localhost:8088/";
 
 const API = {
@@ -18,15 +14,15 @@ const API = {
         })
     },
     delete(objToDeleteId, str){
-        return fetch(`${apiURL}/${str}/${objToDeleteId}`, {
+        return fetch(`${apiURL}${str}/${objToDeleteId}`, {
             method: "DELETE"
         });
     },
     edit(objToEditId, str){
         return fetch(apiURL + str + "/" + objToEditId).then(entry => entry.json());
     },
-    update(objToEdit){
-        return fetch(`${apiURL}/${objToEdit.id}`, {
+    update(objToEdit, str){
+        return fetch(`${apiURL}${str}/${objToEdit.id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
