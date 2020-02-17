@@ -1,4 +1,7 @@
 import API from "./data.js";
+import chatMessages from "./messages/domManagerMessages.js"
+
+const activeUserId = 5;
 
 /*
     Import all the tools into main.js that are needed to display
@@ -6,9 +9,4 @@ import API from "./data.js";
     or the dashboard should be rendered.
 */
 
-API.get("messages").then(objects => console.log(objects));
-API.get("events").then(objects => console.log(objects));
-API.get("articles").then(objects => console.log(objects));
-API.get("friendships").then(objects => console.log(objects));
-API.get("tasks").then(objects => console.log(objects));
-API.get("users").then(objects => console.log(objects));
+chatMessages.logInListener();

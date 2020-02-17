@@ -1,0 +1,9 @@
+#containerMessages, #chatLog {
+    border: 1px black dashed;
+}
+
+#chatLog {
+    height: 100px;
+    overflow-x: scroll;
+    overflow-anchor: bottom;
+}
