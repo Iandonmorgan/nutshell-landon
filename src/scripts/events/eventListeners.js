@@ -42,7 +42,6 @@ const eventListeners = {
         .then(eventListeners.clearForm)
       }
     })
-
   },
   editEvent() {
     const targetDom = document.getElementById("printLocationEvents");
@@ -60,7 +59,6 @@ const eventListeners = {
     const targetDateInput = document.getElementById("dateInputEvents");
     const targetLocationInput = document.getElementById("locationInputEvents");
     const targetAddressInput = document.getElementById("addressInputEvents");
-    console.log(targetAddressInput)
     const targetCityInput = document.getElementById("cityInputEvents");
     const targetStateInput = document.getElementById("stateInputEvents");
     const targetZipInput = document.getElementById("zipInputEvents");
@@ -96,7 +94,6 @@ targetDom.addEventListener("click", event => {
     const targetDateInput = document.getElementById("dateInputEvents");
     const targetLocationInput = document.getElementById("locationInputEvents");
     const targetAddressInput = document.getElementById("addressInputEvents");
-    console.log(targetAddressInput)
     const targetCityInput = document.getElementById("cityInputEvents");
     const targetStateInput = document.getElementById("stateInputEvents");
     const targetZipInput = document.getElementById("zipInputEvents");

@@ -7,4 +7,4 @@ eventListeners.editEvent();
 eventListeners.deleteEvent();
 
 API.get("events")
-.then(renderHtmlEvents)
+  .then(renderHtmlEvents)
