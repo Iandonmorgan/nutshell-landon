@@ -7,9 +7,9 @@ import newArticleEventListener from "./articles/articleEvents.js"
 */
 
 
-API.get("messages").then(objects => console.log(objects));
-API.get("events").then(objects => console.log(objects));
-API.get("articles").then(objects => console.log(objects));
-API.get("friendships").then(objects => console.log(objects));
-API.get("tasks").then(objects => console.log(objects));
-API.get("users").then(objects => console.log(objects));
+// API.get("messages").then(objects => console.log(objects));
+// API.get("events").then(objects => console.log(objects));
+// API.get("articles").then(objects => console.log(objects));
+// API.get("friendships").then(objects => console.log(objects));
+// API.get("tasks").then(objects => console.log(objects));
+// API.get("users").then(objects => console.log(objects));
