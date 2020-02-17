@@ -1,7 +1,3 @@
-/* 
-Code that deals with getting the data.
-*/
-
 const apiURL = "http://localhost:8088/";
 
 const API = {
