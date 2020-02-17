@@ -17,7 +17,16 @@ const renderHtmlEvents = (events) => {
 
   targetDom.innerHTML = "";
 
-  events.sort((a,b) => Date.parse(b.date) - Date.parse(a.date))
+  events.sort(function(a, b) {
+    if (a.date > b.date) {
+      return 1;
+    }
+    if (a.date < b.date) {
+      return -1;
+    }
+    return 0;
+  }).reverse();
+  
   console.log(events)
 
   const soonestToLatest = events.reverse();
@@ -26,6 +35,32 @@ const renderHtmlEvents = (events) => {
   soonestToLatest.forEach(element => {
     targetDom.innerHTML += htmlEvent(element)
   });
+
+  // const newArray = events.map(function(object) {return `[${object.date}, ${object.id}]`}).sort();
+  // console.log(newArray);
+  
+  // newArray.forEach(element => {
+  //   events.forEach(object => {
+  //     if (object.date === element.date) {
+  //       targetDom.innerHTML += htmlEvent(object);
+  //     }
+  //   })
+  // });
+
+
+
+
+
+
+
+
+  // for(let i = 0 ; i < events.length ; i++) {
+  //   const date = Date.parse(events[i].date)
+  //   if (
+  // }
+  // sortedArray.forEach(event => {
+  // targetDom.innerHTML += htmlEvent(event)    
+  // });
 }
 
 export default renderHtmlEvents
