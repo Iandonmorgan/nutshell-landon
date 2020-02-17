@@ -48,7 +48,11 @@ targetFormLocation.innerHTML = eventsFormHtml
       eventListeners.cancel();
   },
 
-  newEvent() {
+  printEvents() {
+
+  },
+
+  newEvents() {
     const targetNewEventButton = document.getElementById("newEventButton");
 
     targetNewEventButton.addEventListener("click", () => {
@@ -176,7 +180,7 @@ targetFormLocation.innerHTML = eventsFormHtml
     // const targetCityInput = document.getElementById("cityInputEvents");
     // const targetStateInput = document.getElementById("stateInputEvents");
     // const targetZipInput = document.getElementById("zipInputEvents");
-    // const targetHiddenIdInput = document.getElementById("hiddenInputEvents");
+    const targetHiddenIdInput = document.getElementById("hiddenInputEvents");
 
     // targetNameInput.value = ""
     // targetDateInput.value = ""
@@ -185,11 +189,11 @@ targetFormLocation.innerHTML = eventsFormHtml
     // targetCityInput.value = ""
     // targetStateInput.value = ""
     // targetZipInput.value = ""
-    // targetHiddenIdInput.value = ""
+    targetHiddenIdInput.value = ""
 
     const targetDom = document.getElementById("entryFormEvents");
     targetDom.innerHTML = `<button type="button" id="newEventButton">New Event</button>`
-    eventListeners.newEvent();
+    eventListeners.newEvents();
   }
 }
 

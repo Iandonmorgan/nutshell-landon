@@ -17,9 +17,21 @@ const renderHtmlEvents = (events) => {
 
   targetDom.innerHTML = "";
 
-  events.forEach(event => {
-  targetDom.innerHTML += htmlEvent(event)    
-  });
+  const newArray = events.map(object =>  object.date);
+  console.log(newArray);
+
+  
+  
+  
+  
+
+  // for(let i = 0 ; i < events.length ; i++) {
+  //   const date = Date.parse(events[i].date)
+  //   if (
+  // }
+  // sortedArray.forEach(event => {
+  // targetDom.innerHTML += htmlEvent(event)    
+  // });
 }
 
 export default renderHtmlEvents

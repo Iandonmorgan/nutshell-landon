@@ -6,7 +6,7 @@ import eventListeners from "./eventListeners.js"
 
 API.get("events")
   .then(renderHtmlEvents)
-  
+
 eventListeners.editEvent();
 eventListeners.deleteEvent();
-eventListeners.newEvent();
+eventListeners.newEvents();
