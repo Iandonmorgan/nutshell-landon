@@ -1,5 +1,4 @@
-import API from "./data.js";
-import {openTasks,save} from "./tasks/events.js"
+import {openTasksForm} from "./tasks/events.js"
 
 /*
     Import all the tools into main.js that are needed to display
@@ -7,13 +6,12 @@ import {openTasks,save} from "./tasks/events.js"
     or the dashboard should be rendered.
 */
 
-API.get("messages").then(objects => console.log(objects));
-API.get("events").then(objects => console.log(objects));
-API.get("articles").then(objects => console.log(objects));
-API.get("friendships").then(objects => console.log(objects));
-API.get("tasks").then(objects => console.log(objects));
-API.get("users").then(objects => console.log(objects));
+// API.get("messages").then(objects => console.log(objects));
+// API.get("events").then(objects => console.log(objects));
+// API.get("articles").then(objects => console.log(objects));
+// API.get("friendships").then(objects => console.log(objects));
+// API.get("tasks").then(objects => console.log(objects));
+// API.get("users").then(objects => console.log(objects));
 
 // adding dynamic tasks form to DOM when 'Tasks' button clicked - Tyler
-openTasks();
-save();
+openTasksForm()

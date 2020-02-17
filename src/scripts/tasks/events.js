@@ -3,29 +3,29 @@ import {renderForm} from "./dom.js"
 import {newTaskObj} from "./factory.js"
 
 const taskBtn = document.querySelector("#tasks")
-const saveBtn = document.querySelector("#submitTask")
-const taskContainer = document.querySelector("#tasks-container")
+const hiddenVal = document.querySelector("#hidden-input")
 
-const openTasks = () => {
+const openTasksForm = () => {
     taskBtn.addEventListener("click", () => {
-        return renderForm();
+        hiddenVal.value = 1;
+        renderForm();
+        addSaveFunctionality();
     })
 }
 
-// Add hidden input field
-const save = () => {
-    if (taskContainer.contains(saveBtn)) {
+const addSaveFunctionality = () => {
+    if (parseInt(hiddenVal.value) !== "") {
+        const saveBtn = document.querySelector("#submitTask")
         saveBtn.addEventListener("click", event => {
-            console.log(event)
-            // const taskVal = document.querySelector("#createTask").value
-            // const dateVal = document.querySelector("#completionDate").value
+            const taskVal = document.querySelector("#createTask").value
+            const dateVal = document.querySelector("#completionDate").value
         
-            // const newObj = newTaskObj(taskVal, dateVal)
-            // console.log(newObj)
+            const newObj = newTaskObj(taskVal, dateVal)
+            console.log(newObj)
         
-            // API.save()
+            API.save(newObj, "tasks")
         })
     }
 }
 
-export {openTasks,save}
+export {openTasksForm}
