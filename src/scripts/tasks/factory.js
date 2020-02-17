@@ -2,13 +2,14 @@
 // be added to the DOM when GET(ing) the tasks
 
 // Need to figure out what to input for userId property
-const newTaskObj = (obj) => {
+const newTaskObj = (val1, val2) => {
     return `
         {
-            "userId": ${obj.},
-            "name": "${obj.name}",
-            "deadline": "${obj.date}",
+            "name": "${val1}",
+            "deadline": "${val2}",
             "isComplete": false
         }
     `
 }
+
+export {newTaskObj}

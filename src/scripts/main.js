@@ -1,5 +1,5 @@
 import API from "./data.js";
-import {renderForm} from "./tasks/dom.js"
+import {openTasks,save} from "./tasks/events.js"
 
 /*
     Import all the tools into main.js that are needed to display
@@ -14,5 +14,6 @@ API.get("friendships").then(objects => console.log(objects));
 API.get("tasks").then(objects => console.log(objects));
 API.get("users").then(objects => console.log(objects));
 
-// adding dynamic tasks form to DOM - Tyler
-renderForm();
+// adding dynamic tasks form to DOM when 'Tasks' button clicked - Tyler
+openTasks();
+save();
