@@ -16,6 +16,7 @@ const openTasksForm = () => {
         addSaveFunctionality();
         addViewTasksFunctionality();
         addCheckboxFunctionality();
+        addDeleteFunctionality();
     })
 }
 
@@ -64,6 +65,23 @@ const addCheckboxFunctionality = () => {
                 resp.isComplete = true;
                 API.update(resp, "tasks")
             })
+        }
+    })
+}
+
+const addDeleteFunctionality = () => {
+    taskListContainer.addEventListener("click", event => {
+        if (event.target.id.startsWith("deleteBtn--")) {
+            const objToDelete = event.target.id.split("--")[1]
+            // SO, the delete is working, but for some reason it's only updating the DOM realtime
+            // on every item delete AFTER the first item. The first item requires a pg refresh.
+            API.delete(objToDelete, "tasks")
+            taskListContainer.innerHTML = ""
+            API.get("tasks").then(entries => entries.forEach(entry => {
+                if (entry.isComplete === false) {
+                    taskListContainer.innerHTML += taskListFactory(entry)
+                }
+            }))
         }
     })
 }

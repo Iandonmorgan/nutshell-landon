@@ -26,7 +26,8 @@ const taskListFactory = (obj) => {
             <h2 id="task-name">${obj.name}</h2>
             <h2 id="task-date">${obj.deadline}</h2>
             <input type="checkbox" name="completed" value="Complete" id="checkbox--${obj.id}">
-            <label for="completed">Complete</label>
+            <label for="completed">Complete</label><br />
+            <button id="deleteBtn--${obj.id}">Delete Task</button>
         </section>
     `
 }
