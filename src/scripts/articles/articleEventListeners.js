@@ -1,5 +1,5 @@
 import API from "../data.js";
-import newArticleForm from "./articleHTMLManager.js";
+import newArticleForm from "./articleFormManager.js";
 import renderArticles from "./articleDomManager.js";
 
 const articleEventListeners = {
