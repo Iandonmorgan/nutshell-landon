@@ -31,6 +31,17 @@ const articleHTMLManager = {
       <button id="editNewsArticle--${newsArticle.id}" class="editBtn">Edit</button>
       <button id="deleteNewsArticle--${newsArticle.id}" class="deleteBtn">Delete</button>
       `;
+  },
+  renderArticles: articles => {
+    const articlesDom = document.getElementById("newsArticles");
+  
+    articlesDom.innerHTML = "";
+  
+    articles.forEach(article => {
+    articlesDom.innerHTML += makeNewsArticleComponent(article)    
+    });
   }
 };
+
+
 export default articleHTMLManager;

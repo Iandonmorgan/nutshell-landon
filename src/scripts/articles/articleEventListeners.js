@@ -1,7 +1,9 @@
+import API from "../data.js";
 import articleHTMLManager from "./articleHTMLManager.js";
+import renderArticles from "./articleHTMLManager.js";
 
 const articleEventListeners = {
-  newArticleEventListener: () => {
+  newArticleEventListener() {
     const newArticleBtn = document.getElementById("newArticleBtn");
     const dashboardEl = document.getElementById("dashboardFormField");
 
@@ -11,7 +13,7 @@ const articleEventListeners = {
       articleEventListeners.addSaveArticleEventListener();
     });
   },
-  addSaveArticleEventListener: () => {
+  addSaveArticleEventListener() {
     const saveBtn = document.getElementById("saveArticleBtn");
 
     saveBtn.addEventListener("click", () => {
@@ -32,17 +34,25 @@ const articleEventListeners = {
           synopsis: synopsisInput.value,
           url: urlInput.value
         };
-        
+
         dashboardEl.textContent = "";
 
         //function that renders the news article data
-        console.log("clicked save")
-        // clears input values
-        newsTitleInput.value = "";
-        synopsisInput.value = "";
-        urlInput.value = "";
+        console.log("clicked save");
+        API.save(newNewsArticleEntry, "articles")
+          .then(() => API.get("articles").then(renderArticles))
+          .then(articleEventListeners.clearForm);
       }
     });
+  },
+  clearForm() {
+    const newsTitleInput = document.getElementById("newsTitle");
+    const synopsisInput = document.getElementById("synopsis");
+    const urlInput = document.getElementById("articleUrl");
+
+    newsTitleInput.value = "";
+    synopsisInput.value = "";
+    urlInput.value = "";
   }
 };
 
