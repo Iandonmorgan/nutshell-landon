@@ -92,15 +92,26 @@ const addEditFunctionality = () => {
     taskListContainer.addEventListener("click", event => {
         if (event.target.id.startsWith("editName--")) {
             const nameInputField = document.getElementById("createTask")
+            const dateInputField = document.getElementById("completionDate")
             const objIdToEdit = event.target.id.split("--")[1]
             
             API.edit(objIdToEdit, "tasks").then(resp => {
                 nameInputField.value = resp.name
+                dateInputField.value = resp.deadline
                 nameInputField.addEventListener("keypress", event => {
                     if (event.charCode === 13) {
                         event.preventDefault()
                         const updatedName = nameInputField.value
-                        // API.update()
+                        const updatedDate = dateInputField.value
+                        
+                        // Thinking I need to also repopulate the date inp, this way I can invoke the factory
+                        // function that creates an updated obj using 2 arguments... Then I can use PUT with 
+                        // that new obj...
+                        const updatedObj = newTaskObj(updatedName, updatedDate)
+                        // Having trouble PUT(ing) the updated obj b/c the API method is trying to get an ID to 
+                        // find the DB obj to update... But my obj factory func doesn't have an ID property...
+                        // Can I somehow use the obj the comes back from API.edit()?
+                        API.update(updatedObj, "tasks")
                     }
                 })
             })
