@@ -70,6 +70,7 @@ const addCheckboxFunctionality = () => {
     })
 }
 
+// TODO: Add a confirm message on delete btn click
 // Deletes task from DB and task container in DOM on 'Delete' btn click
 const addDeleteFunctionality = () => {
     taskListContainer.addEventListener("click", event => {
