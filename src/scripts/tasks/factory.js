@@ -23,7 +23,7 @@ const checkedTaskObj = (val1, val2) => {
 const taskListFactory = (obj) => {
     return `
         <section id="containerTasks--${obj.id}">
-            <h2 id="task-name">${obj.name}</h2>
+            <h2 id="editName--${obj.id}">${obj.name}</h2>
             <h2 id="task-date">${obj.deadline}</h2>
             <input type="checkbox" name="completed" value="Complete" id="checkbox--${obj.id}">
             <label for="completed">Complete</label><br />
