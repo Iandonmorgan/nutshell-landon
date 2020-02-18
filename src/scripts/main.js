@@ -4,5 +4,4 @@ import eventListenersEvents from "./events/eventListeners.js"
     the initial UI to the user. Either the login form should appear
     or the dashboard should be rendered.
 */
-
 eventListenersEvents.printEvents();
