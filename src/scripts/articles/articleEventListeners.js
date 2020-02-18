@@ -2,7 +2,7 @@ import API from "../data.js";
 import newArticleForm from "./articleFormManager.js";
 import renderArticles from "./articleDomManager.js";
 
-const activeId = 2;
+const activeId = 3;
 
 const articleEventListeners = {
   newArticleEventListener() {
