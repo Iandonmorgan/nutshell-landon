@@ -5,6 +5,7 @@ import renderArticles from "./articleDomManager.js";
 articleEventListeners.newArticleEventListener();
 articleEventListeners.deleteArticle();
 articleEventListeners.editArticle();
-API.get("articles").then(renderArticles);
+// API.get("articles").then(renderArticles);
+articleEventListeners.getArticlesByUserId();
 
 export default articleEventListeners.newArticleEventListener();

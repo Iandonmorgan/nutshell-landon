@@ -2,7 +2,7 @@ import API from "../data.js";
 import newArticleForm from "./articleFormManager.js";
 import renderArticles from "./articleDomManager.js";
 
-
+const activeId = 4;
 
 const articleEventListeners = {
   newArticleEventListener() {
@@ -35,13 +35,14 @@ const articleEventListeners = {
           title: newsTitleInput.value,
           synopsis: synopsisInput.value,
           url: urlInput.value,
-          timeStamp: Date.now()
+          timeStamp: Date.now(),
+          userId: activeId
         };
 
         dashboardEl.textContent = "";
 
         API.save(newNewsArticleEntry, "articles")
-          .then(() => API.get("articles").then(renderArticles))
+          .then(articleEventListeners.getArticlesByUserId())
           .then(articleEventListeners.clearForm);
       }
     });
@@ -52,10 +53,12 @@ const articleEventListeners = {
     newsArticlesEl.addEventListener("click", event => {
       if (event.target.id.startsWith("deleteNewsArticle--")) {
         const articleToDelete = event.target.id.split("--")[1];
+        const alert = confirm("Are you sure you want to delete this article?");
 
-        API.delete(articleToDelete, "articles").then(() =>
-          API.get("articles").then(renderArticles)
-        );
+        if (alert) {
+          API.delete(articleToDelete, "articles")
+            .then(articleEventListeners.getArticlesByUserId());
+        }
       }
     });
   },
@@ -95,6 +98,18 @@ const articleEventListeners = {
     newsTitleInput.value = "";
     synopsisInput.value = "";
     urlInput.value = "";
+  },
+  getArticlesByUserId() {
+    let renderArray = [];
+
+    API.get("articles")
+    .then(articles => {
+      articles.map(object => {
+          if (object.userId === activeId) {
+            renderArray.push(object);
+          }
+        }).then(renderArticles(renderArray));
+    });
   }
 };
 
