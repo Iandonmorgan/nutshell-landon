@@ -8,19 +8,27 @@ const newTaskObj = (val1, val2) => {
             deadline: val2,
             isComplete: false,
             userId: 1
-        }
-    
+        }   
+}
+
+const checkedTaskObj = (val1, val2) => {
+    return {
+        name: val1,
+        deadline: val2,
+        isComplete: true,
+        userId: 1
+    }   
 }
 
 const taskListFactory = (obj) => {
     return `
-        <section id="task-container">
-            <h2>Task Name: ${obj.name}</h2>
-            <h2>Expected Completion Date: ${obj.deadline}</h2>
-            <input type="checkbox" name="completed" value="Complete" id="checkbox">
+        <section id="containerTasks--${obj.id}">
+            <h2 id="task-name">${obj.name}</h2>
+            <h2 id="task-date">${obj.deadline}</h2>
+            <input type="checkbox" name="completed" value="Complete" id="checkbox--${obj.id}">
             <label for="completed">Complete</label>
         </section>
     `
 }
 
-export {newTaskObj, taskListFactory}
+export {newTaskObj, taskListFactory, checkedTaskObj}

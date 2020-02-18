@@ -1,6 +1,6 @@
 import API from "../data.js"
 import {renderForm} from "./dom.js"
-import {newTaskObj, taskListFactory} from "./factory.js"
+import {newTaskObj, taskListFactory, checkedTaskObj} from "./factory.js"
 
 const taskBtn = document.querySelector("#tasks")
 const hiddenVal = document.querySelector("#hidden-input")
@@ -12,6 +12,7 @@ const openTasksForm = () => {
         renderForm();
         addSaveFunctionality();
         addViewTasksFunctionality();
+        addCheckboxFunctionality();
     })
 }
 
@@ -41,6 +42,22 @@ const addViewTasksFunctionality = () => {
         API.get("tasks").then(entries => entries.forEach(entry => {
             taskListContainer.innerHTML += taskListFactory(entry)
         }))
+    })
+}
+
+const addCheckboxFunctionality = () => {
+    taskListContainer.addEventListener("click", event => {
+        if (event.target.id.startsWith("checkbox--")) {
+            // Will be used to get the matching obj in the DB
+            const objToEditId = event.target.id.split("--")[1]
+
+            // Now get the matching obj from DB via objToEdit, and then call updateObj API method
+            // and pass in the checkedTaskObj factory fn that creates new obj w/ updated 'isComplete'
+            API.edit(objToEditId, "tasks").then(resp => {
+                resp.isComplete = true;
+                API.update(resp, "tasks")
+            })
+        }
     })
 }
 
