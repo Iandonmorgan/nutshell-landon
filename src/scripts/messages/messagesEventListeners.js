@@ -65,7 +65,7 @@ const messagesListeners = {
                                 "timestamp": Date.now()
                             };
                             chatMessages.update(newMessageContainer.value, message.id, userId);
-                            newMessageContainer.innerHTML = `<span id="messageId--${newEditedMessageObject.id}">${message.user.username}: ${newEditedMessageObject.message}</span> ${chatMessages.editBtnAdd(message)} ${chatMessages.deleteBtnAdd(message)}`;
+                            newMessageContainer.innerHTML = `<span id="messageId--${newEditedMessageObject.id}">${message.user.username}: ${newEditedMessageObject.message}</span> ${chatMessages.editBtnAdd(message, userId)} ${chatMessages.deleteBtnAdd(message, userId)}`;
                         }
                     });
                 });
