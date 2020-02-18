@@ -1,15 +1,12 @@
 import API from "../data.js";
 import messagesListeners from "./messagesEventListeners.js";
 
-
-const containerMessages = document.querySelector("#containerMessages");
-const loggedInUserId = 5;
-
-const chatLine = (html, messageId, user, message) => {
-    return `<${html} id="messageId--${messageId}">${user}: ${message}</${html}>`
-}
+const loggedInUserId = 6;
 
 const chatMessages = {
+    chatLine (html, messageId, user, message) {
+        return `<${html} id="messageId--${messageId}">${user}: ${message}</${html}>`
+    },
     editBtnAdd (message) {
         if (loggedInUserId === message.userId) {
             return `<button id="editMessage--${message.id}">Edit</button>`;
@@ -37,7 +34,7 @@ const chatMessages = {
             chatLogMessages += chatMessages.createMessageLineHTML(message);
         })
         chatLog.innerHTML += chatLogMessages;
-        chatLog.scrollTop = 9999999;
+        chatLog.scrollTop = 9999999999; // there should be a better way to do this scroll. I've noticed with images in the chat, it isn't perfect.
         chatMessages.clearChatInput();
     },
     post(message) {
@@ -50,12 +47,25 @@ const chatMessages = {
         API.save(objToSave, "messages");
         API.get("messages/?_expand=user").then(objects => chatMessages.render(objects));
     },
+    update(message) {
+        const objToSave = {
+            "id": parseInt(message.id),
+            "userId": loggedInUserId,
+            "message": message,
+            "timeStamp": Date.now()
+        };
+        chatMessages.clearUpdateInput();
+        API.update(objToSave, "messages");
+    },
+    clearUpdateInput() {
+        document.querySelector(".editInput").value = "";
+    },
     clearChatInput() {
         document.getElementById("chatInput").value = "";
     },
     createMessageLineHTML(message) {
         return `<p>
-            ${chatLine("span", message.id, message.user.username, message.message)}
+            ${chatMessages.chatLine("span", message.id, message.user.username, message.message)}
             ${chatMessages.editBtnAdd(message)}
             ${chatMessages.deleteBtnAdd(message)}
             </p>`

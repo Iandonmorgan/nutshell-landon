@@ -2,7 +2,7 @@ import API from "../data.js";
 import chatMessages from "./domManagerMessages.js";
 
 const containerMessages = document.querySelector("#containerMessages");
-const loggedInUserId = 5;
+const loggedInUserId = 6;
 
 const chatDisplay = `<div id="chatLog">
                         chat is loading...
@@ -46,22 +46,26 @@ const messagesListeners = {
                     const oldUser = message.user.username;
                     const oldMessage = message.message;
                     const oldMessageId = message.id;
-                    const newMessage = `<span id="messageId--${message.id}">${message.user.username}: <input id="newMessage--${message.id}" type="text" value="${message.message}"></input></span><button id="cancelMessage--${message.id}">Cancel</button><button id="saveMessage--${message.id}">Save</button><button id="deleteMessage--${message.id}">Delete</button>`;
+                    let newMessageHTML = `<span id="messageId--${message.id}">${message.user.username}: <input id="newMessage--${message.id}" class="editInput" type="text" value="` + message.message + `"></input></span><button id="cancelMessage--${message.id}">Cancel</button><button id="saveMessage--${message.id}">Save</button><button id="deleteMessage--${message.id}">Delete</button>`;
                     const newMessageContainer = document.getElementById(`messageId--${message.id}`).parentNode;
-                    newMessageContainer.innerHTML = newMessage;
+                    newMessageContainer.innerHTML = newMessageHTML;
                     newMessageContainer.addEventListener("click", function () {
                         if (event.target.id.split("--")[0] === "cancelMessage") {
                             newMessageContainer.innerHTML = `<span id="messageId--${oldMessageId}">${oldUser}: ${oldMessage}</span>${chatMessages.editBtnAdd(message)}${chatMessages.deleteBtnAdd(message)}`;
+                            return "";
                         } else if (event.target.id.split("--")[0] === "saveMessage") {
-                            const newEditedMessage = document.getElementById(`newMessage--${event.target.id.split("--")[1]}`);
+                            let newEditedMessage = document.getElementById(`newMessage--${event.target.id.split("--")[1]}`);
                             const newEditedMessageObject = {
                                 "id": parseInt(event.target.id.split("--")[1]),
                                 "userId": loggedInUserId,
                                 "message": newEditedMessage.value,
                                 "timestamp": Date.now()
-                            }
-                            API.update(newEditedMessageObject, "messages");
+                            };
+                            console.log(newEditedMessageObject);
                             newMessageContainer.innerHTML = `<span id="messageId--${newEditedMessageObject.id}">${oldUser}: ${newEditedMessageObject.message}</span> ${chatMessages.editBtnAdd(message)} ${chatMessages.deleteBtnAdd(message)}`;
+                            newMessageHTML = `<span id="messageId--${message.id}">${message.user.username}: <input id="newMessage--${message.id}" class="editInput" type="text" value='${message.message}'></input></span><button id="cancelMessage--${message.id}">Cancel</button><button id="saveMessage--${message.id}">Save</button><button id="deleteMessage--${message.id}">Delete</button>`;
+                            API.update(newEditedMessageObject, "messages").then(messagesListeners.mutateListener);
+                            return "";
                         }
                     });
                 });
