@@ -14,6 +14,8 @@ const renderArticles = articles => {
 
   articlesDom.innerHTML = "";
 
+  articles.sort(function(a, b){return b.timeStamp - a.timeStamp});
+
   articles.forEach(article => {
     articlesDom.innerHTML += makeNewsArticleComponent(article);
   });
