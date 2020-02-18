@@ -32,7 +32,8 @@ const articleEventListeners = {
         const newNewsArticleEntry = {
           title: newsTitleInput.value,
           synopsis: synopsisInput.value,
-          url: urlInput.value
+          url: urlInput.value,
+          timestamp: Date.now()
         };
 
         dashboardEl.textContent = "";
