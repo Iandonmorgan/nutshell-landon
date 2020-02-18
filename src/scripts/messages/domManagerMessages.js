@@ -37,7 +37,7 @@ const chatMessages = {
     },
     post(message, userId) {
         const objToSave = {
-            "userId": userId,
+            "userId": parseInt(userId),
             "message": message,
             "timeStamp": Date.now()
         };
