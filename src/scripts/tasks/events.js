@@ -2,6 +2,8 @@ import API from "../data.js"
 import {renderForm} from "./dom.js"
 import {newTaskObj, taskListFactory, checkedTaskObj} from "./factory.js"
 
+// STRETCH GOALS: 1) When save task btn clicked, remove text from the input fields 
+
 const taskBtn = document.querySelector("#tasks")
 const hiddenVal = document.querySelector("#hidden-input")
 const taskListContainer = document.querySelector("#tasks-list")
@@ -18,11 +20,13 @@ const openTasksForm = () => {
 }
 
 const addSaveFunctionality = () => {
+    // Line 22 makes sure 'Tasks' button has been clicked to open form and access save btn
     if (parseInt(hiddenVal.value) !== "") {
         const saveBtn = document.querySelector("#submitTask")
+
         saveBtn.addEventListener("click", event => {
-            const taskVal = document.querySelector("#createTask").value
-            const dateVal = document.querySelector("#completionDate").value
+            let taskVal = document.querySelector("#createTask").value
+            let dateVal = document.querySelector("#completionDate").value
         
             const newObj = newTaskObj(taskVal, dateVal)
         
@@ -31,7 +35,8 @@ const addSaveFunctionality = () => {
     }
 }
 
-// GET all 'tasks' objs in DB, converts them to HTML and adds to DOM
+// GET all 'tasks' objs in DB, finds only those whose 'isComplete' property value is false,
+// then converts them to HTML and adds to DOM.
 const addViewTasksFunctionality = () => {
     const viewTasksBtn = document.querySelector("#viewTasks")
 
@@ -47,7 +52,6 @@ const addViewTasksFunctionality = () => {
 }
 
 // Changes 'isComplete' property value in the 'tasks' DB from 'false' to 'true' for whichever item's/DB obj's checkbox is clicked
-// Now, need to re-render ONLY those DB obj's whose 'isComplete' val is false....
 const addCheckboxFunctionality = () => {
     taskListContainer.addEventListener("click", event => {
         if (event.target.id.startsWith("checkbox--")) {
