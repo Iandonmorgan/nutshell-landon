@@ -12,13 +12,13 @@ const articleEventListeners = {
     newArticleBtn.addEventListener("click", () => {
       dashboardEl.textContent = "";
       dashboardEl.innerHTML += newArticleForm();
-      articleEventListeners.addSaveArticleEventListener();
+      articleEventListeners.addRecordArticleEventListener();
     });
   },
-  addSaveArticleEventListener() {
-    const saveBtn = document.getElementById("saveArticleBtn");
+  addRecordArticleEventListener() {
+    const recordBtn = document.getElementById("recordArticleBtn");
 
-    saveBtn.addEventListener("click", () => {
+    recordBtn.addEventListener("click", () => {
       const newsTitleInput = document.getElementById("newsTitle");
       const synopsisInput = document.getElementById("synopsis");
       const urlInput = document.getElementById("articleUrl");
@@ -74,7 +74,7 @@ const articleEventListeners = {
         dashboardEl.textContent = "";
         dashboardEl.innerHTML += newArticleForm();
         articleEventListeners.updateArticleForm(articleToEdit);
-        articleEventListeners.addSaveArticleEventListener();
+        articleEventListeners.addRecordArticleEventListener();
       }
     });
   },
