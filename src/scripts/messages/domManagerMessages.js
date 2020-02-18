@@ -1,20 +1,21 @@
 import API from "../data.js";
 import messagesListeners from "./messagesEventListeners.js";
 
-const loggedInUserId = 6;
+
+const loggedInUserId = 5;
 
 const chatMessages = {
-    chatLine (html, messageId, user, message) {
+    chatLine(html, messageId, user, message) {
         return `<${html} id="messageId--${messageId}">${user}: ${message}</${html}>`
     },
-    editBtnAdd (message) {
+    editBtnAdd(message) {
         if (loggedInUserId === message.userId) {
             return `<button id="editMessage--${message.id}">Edit</button>`;
         } else {
             return "";
         }
     },
-    deleteBtnAdd (message) {
+    deleteBtnAdd(message) {
         if (loggedInUserId === message.userId) {
             return `<button id="deleteMessage--${message.id}">Delete</button>`;
         } else {
@@ -47,9 +48,9 @@ const chatMessages = {
         API.save(objToSave, "messages");
         API.get("messages/?_expand=user").then(objects => chatMessages.render(objects));
     },
-    update(message) {
+    update(message, id) {
         const objToSave = {
-            "id": parseInt(message.id),
+            "id": parseInt(id),
             "userId": loggedInUserId,
             "message": message,
             "timeStamp": Date.now()
