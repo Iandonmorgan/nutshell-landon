@@ -2,6 +2,8 @@ import API from "../data.js";
 import newArticleForm from "./articleFormManager.js";
 import renderArticles from "./articleDomManager.js";
 
+
+
 const articleEventListeners = {
   newArticleEventListener() {
     const newArticleBtn = document.getElementById("newArticleBtn");
@@ -38,8 +40,6 @@ const articleEventListeners = {
 
         dashboardEl.textContent = "";
 
-        //function that updates the 'articles' database and renders the news articles to the DOM
-        console.log("clicked save");
         API.save(newNewsArticleEntry, "articles")
           .then(() => API.get("articles").then(renderArticles))
           .then(articleEventListeners.clearForm);
@@ -62,7 +62,7 @@ const articleEventListeners = {
   editArticle() {
     const newsArticlesEl = document.getElementById("newsArticles");
     const dashboardEl = document.getElementById("dashboardFormField");
-    
+
     newsArticlesEl.addEventListener("click", event => {
       if (event.target.id.startsWith("editNewsArticle--")) {
         const articleToEdit = event.target.id.split("--")[1];
