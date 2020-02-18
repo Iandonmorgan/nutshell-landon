@@ -91,7 +91,19 @@ const addDeleteFunctionality = () => {
 const addEditFunctionality = () => {
     taskListContainer.addEventListener("click", event => {
         if (event.target.id.startsWith("editName--")) {
+            const nameInputField = document.getElementById("createTask")
+            const objIdToEdit = event.target.id.split("--")[1]
             
+            API.edit(objIdToEdit, "tasks").then(resp => {
+                nameInputField.value = resp.name
+                nameInputField.addEventListener("keypress", event => {
+                    if (event.charCode === 13) {
+                        event.preventDefault()
+                        const updatedName = nameInputField.value
+                        // API.update()
+                    }
+                })
+            })
         }
     })
 }
