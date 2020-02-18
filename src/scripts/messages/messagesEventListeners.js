@@ -1,9 +1,6 @@
 import API from "../data.js";
 import chatMessages from "./domManagerMessages.js";
 
-
-const loggedInUserId = 5;
-
 const containerMessages = document.querySelector("#containerMessages");
 let newMessageContainer = "";
 const chatDisplay = `<div id="chatLog">
@@ -15,25 +12,25 @@ const chatDisplay = `<div id="chatLog">
                     </div>`;
 
 const messagesListeners = {
-    logInListener() {
+    logInListener(userId) {
         document.getElementById("chatLogin").addEventListener("click", function () {
             containerMessages.innerHTML = chatDisplay;
-            chatMessages.loggedIn();
+            chatMessages.loggedIn(userId);
         });
     },
-    submitListener() {
+    submitListener(userId) {
         const submit = document.getElementById("chatSubmit");
         const chatInput = document.getElementById("chatInput")
         chatInput.addEventListener('keyup', function (e) {
             if (e.keyCode === 13 && chatInput.value == "") {
                 window.alert("Please enter a message before submitting.");
             } else if (e.keyCode === 13) {
-                chatMessages.post(chatInput.value);
+                chatMessages.post(chatInput.value, userId);
             }
         });
         submit.addEventListener("click", function () {
             if (chatInput.value !== "") {
-                chatMessages.post(chatInput.value);
+                chatMessages.post(chatInput.value, userId);
             } else {
                 window.alert("Please enter a message before submitting.");
             }
@@ -49,7 +46,7 @@ const messagesListeners = {
         newMessage += newMessageSafeHTML[parseInt(newMessageSafeHTML.length - 1)];
         return newMessage;
     },
-    mutateListener() {
+    mutateListener(userId) {
         const chatLog = document.getElementById("chatLog");
         chatLog.addEventListener("click", function () {
             if (event.target.id.split("--")[0] === "editMessage") {
@@ -63,11 +60,11 @@ const messagesListeners = {
                         } else if (e.keyCode === 13) {
                             const newEditedMessageObject = {
                                 "id": parseInt(message.id),
-                                "userId": loggedInUserId,
+                                "userId": userId,
                                 "message": newMessageContainer.value,
                                 "timestamp": Date.now()
                             };
-                            chatMessages.update(newMessageContainer.value, message.id);
+                            chatMessages.update(newMessageContainer.value, message.id, userId);
                             newMessageContainer.innerHTML = `<span id="messageId--${newEditedMessageObject.id}">${message.user.username}: ${newEditedMessageObject.message}</span> ${chatMessages.editBtnAdd(message)} ${chatMessages.deleteBtnAdd(message)}`;
                         }
                     });
@@ -75,23 +72,21 @@ const messagesListeners = {
             } else if (event.target.id.split("--")[0] === "cancelMessage") {
                 API.edit(`${event.target.id.split("--")[1]}/?_expand=user`, "messages").then(message => {
                     newMessageContainer = document.getElementById(`messageId--${message.id}`).parentNode;
-                    newMessageContainer.innerHTML = `<span id="messageId--${message.id}">${message.user.username}: ${message.message}</span>${chatMessages.editBtnAdd(message)}${chatMessages.deleteBtnAdd(message)}`;
+                    newMessageContainer.innerHTML = `<span id="messageId--${message.id}">${message.user.username}: ${message.message}</span>${chatMessages.editBtnAdd(message, userId)}${chatMessages.deleteBtnAdd(message, userId)}`;
                     return "";
                 });
             } else if (event.target.id.split("--")[0] === "saveMessage") {
                 let newEditedMessage = document.querySelector(".editInput");
                 const newEditedMessageObject = {
                     "id": parseInt(event.target.id.split("--")[1]),
-                    "userId": loggedInUserId,
+                    "userId": userId,
                     "message": newEditedMessage.value,
                     "timestamp": Date.now()
                 };
                 API.edit(`${event.target.id.split("--")[1]}/?_expand=user`, "messages").then(message => {
                     newMessageContainer = document.getElementById(`messageId--${message.id}`).parentNode;
-                    newMessageContainer.innerHTML = `<span id="messageId--${newEditedMessageObject.id}">${message.user.username}: ${newEditedMessageObject.message}</span> ${chatMessages.editBtnAdd(message)} ${chatMessages.deleteBtnAdd(message)}`;
-                    let newMessageHTML = `<span id="messageId--${message.id}">${message.user.username}: <input id="newMessage--${message.id}" class="editInput" type="text" value="` + messagesListeners.processMessage(message.message) + `"></input></span><button id="cancelMessage--${message.id}">Cancel</button><button id="saveMessage--${message.id}">Save</button><button id="deleteMessage--${message.id}">Delete</button>`;
+                    newMessageContainer.innerHTML = `<span id="messageId--${newEditedMessageObject.id}">${message.user.username}: ${newEditedMessageObject.message}</span> ${chatMessages.editBtnAdd(message, userId)} ${chatMessages.deleteBtnAdd(message, userId)}`;
                     API.update(newEditedMessageObject, "messages");
-                    newMessageContainer.removeEventListener("click", function () { });
                     return "";
                 });
             } else if (event.target.id.split("--")[0] === "deleteMessage") {

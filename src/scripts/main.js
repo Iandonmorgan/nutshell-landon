@@ -5,5 +5,5 @@ import messagesListeners from "./messages/messagesEventListeners.js";
     the initial UI to the user. Either the login form should appear
     or the dashboard should be rendered.
 */
-
-messagesListeners.logInListener();
+const loggedInUserId = 5;
+messagesListeners.logInListener(loggedInUserId);
