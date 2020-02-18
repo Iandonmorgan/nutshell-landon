@@ -4,7 +4,6 @@ const makeNewsArticleComponent = newsArticle => {
       <h1>${newsArticle.title}</h1>
       <section>${newsArticle.synopsis}</section>
       <article>${newsArticle.url}</article>
-      <article>${newsArticle.timestamp}</article>
       <button id="editNewsArticle--${newsArticle.id}" class="editBtn">Edit</button>
       <button id="deleteNewsArticle--${newsArticle.id}" class="deleteBtn">Delete</button>
       `;

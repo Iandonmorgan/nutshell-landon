@@ -46,6 +46,47 @@ const articleEventListeners = {
       }
     });
   },
+  deleteArticle() {
+    const newsArticlesEl = document.getElementById("newsArticles");
+
+    newsArticlesEl.addEventListener("click", event => {
+      if (event.target.id.startsWith("deleteNewsArticle--")) {
+        const articleToDelete = event.target.id.split("--")[1];
+
+        API.delete(articleToDelete, "articles").then(() =>
+          API.get("articles").then(renderArticles)
+        );
+      }
+    });
+  },
+  editArticle() {
+    const newsArticlesEl = document.getElementById("newsArticles");
+    const dashboardEl = document.getElementById("dashboardFormField");
+    
+    newsArticlesEl.addEventListener("click", event => {
+      if (event.target.id.startsWith("editNewsArticle--")) {
+        const articleToEdit = event.target.id.split("--")[1];
+        dashboardEl.scrollIntoView();
+        dashboardEl.textContent = "";
+        dashboardEl.innerHTML += newArticleForm();
+        articleEventListeners.updateArticleForm(articleToEdit);
+        articleEventListeners.addSaveArticleEventListener();
+      }
+    });
+  },
+  updateArticleForm(articleId) {
+    const newsTitleInput = document.getElementById("newsTitle");
+    const synopsisInput = document.getElementById("synopsis");
+    const urlInput = document.getElementById("articleUrl");
+    const hiddenIdInput = document.getElementById("articleHiddenId");
+
+    API.get(`articles/${articleId}`).then(article => {
+      hiddenIdInput.value = article.id;
+      newsTitleInput.value = article.title;
+      synopsisInput.value = article.synopsis;
+      urlInput.value = article.url;
+    });
+  },
   clearForm() {
     const newsTitleInput = document.getElementById("newsTitle");
     const synopsisInput = document.getElementById("synopsis");
