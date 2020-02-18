@@ -17,50 +17,21 @@ const renderHtmlEvents = (events) => {
 
   targetDom.innerHTML = "";
 
-  events.sort(function(a, b) {
-    if (a.date > b.date) {
+  events.sort(function (a, b) {
+    if (a.date < b.date) {
       return 1;
     }
-    if (a.date < b.date) {
+    if (a.date > b.date) {
       return -1;
     }
     return 0;
-  }).reverse();
-  
-  console.log(events)
+  });
 
   const soonestToLatest = events.reverse();
-  console.log(soonestToLatest);
 
   soonestToLatest.forEach(element => {
     targetDom.innerHTML += htmlEvent(element)
   });
-
-  // const newArray = events.map(function(object) {return `[${object.date}, ${object.id}]`}).sort();
-  // console.log(newArray);
-  
-  // newArray.forEach(element => {
-  //   events.forEach(object => {
-  //     if (object.date === element.date) {
-  //       targetDom.innerHTML += htmlEvent(object);
-  //     }
-  //   })
-  // });
-
-
-
-
-
-
-
-
-  // for(let i = 0 ; i < events.length ; i++) {
-  //   const date = Date.parse(events[i].date)
-  //   if (
-  // }
-  // sortedArray.forEach(event => {
-  // targetDom.innerHTML += htmlEvent(event)    
-  // });
-}
+};
 
 export default renderHtmlEvents

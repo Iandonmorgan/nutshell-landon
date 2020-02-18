@@ -13,15 +13,15 @@ const API = {
             body: JSON.stringify(objToSave)
         })
     },
-    delete(objToDeleteId, str){
+    delete(objToDeleteId, str) {
         return fetch(`${apiURL}${str}/${objToDeleteId}`, {
             method: "DELETE"
         });
     },
-    edit(objToEditId, str){
+    edit(objToEditId, str) {
         return fetch(apiURL + str + "/" + objToEditId).then(entry => entry.json());
     },
-    update(objToEdit, str){
+    update(objToEdit, str) {
         return fetch(`${apiURL}${str}/${objToEdit.id}`, {
             method: "PUT",
             headers: {

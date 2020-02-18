@@ -1,67 +1,65 @@
 import renderHtmlEvents from "./domManagerEvents.js"
 import API from "../data.js";
 
-const eventListeners = {
+const eventListenersEvents = {
 
   printForm() {
     const targetFormLocation = document.getElementById("entryFormEvents");
     console.log(targetFormLocation)
-    const eventsFormHtml = ` <div id="populateForm">
-    
-    <div id="nameInputDivEvents">
-      <label id="nameLabelEvents" for="nameLabelEvents">Event: </label>
-      <input id="nameInputEvents" type="text" name="nameInputEvents">
+    const eventsFormHtml = `
+      <div id="populateForm">
+        
+        <div id="nameInputDivEvents">
+          <label id="nameLabelEvents" for="nameLabelEvents">Event: </label>
+          <input id="nameInputEvents" type="text" name="nameInputEvents">
+        </div>
+        <div id="dateInputDivEvents">
+          <label id="dateLabelEvents" for="dateLabelEvents"></label>
+          <input id="dateInputEvents" type="date" name="dateInputEvents">
+        </div>
+        <div id="locationInputDivEvents">
+          <label id="locationLabelEvents" for="locationLabelEvents">Location: </label>
+          <input id="locationInputEvents" type="text" name="locationInputEvents">
+        </div>
+        <div id="addressInputDivEvents">
+          <label id="addressLabelEvents" for="addressLabelEvents">Street Address: </label>
+          <input id="addressInputEvents" type="text" name="addressInputEvents">
+        </div>
+        <div id="cityInputDivEvents">
+          <label id="cityLabelEvents" for="cityLabelEvents">City: </label>
+          <input id="cityInputEvents" type="text" name="cityInputEvents">
+        </div>
+        <div id="stateInputDivEvents">
+          <label id="stateLabelEvents" for="stateLabelEvents">State: </label>
+          <input id="stateInputEvents" type="text" name="stateInputEvents">
+        </div>
+        <div id="zipInputDivEvents">
+          <label id="zipLabelEvents" for="zipLabelEvents">Zip Code: </label>
+          <input id="zipInputEvents" type="text" name="zipInputEvents">
+        </div>
+        <div id="buttonDivEvents">
+          <button type="button" id="eventsSubmitButton">Submit to a Higher Power</button>
+          <button type="button" id="cancelButtonEvents">Cancel Culture</button>
+        </div>
+      </div>
     </div>
-    <div id="dateInputDivEvents">
-      <label id="dateLabelEvents" for="dateLabelEvents"></label>
-      <input id="dateInputEvents" type="date" name="dateInputEvents">
-    </div>
-    <div id="locationInputDivEvents">
-      <label id="locationLabelEvents" for="locationLabelEvents">Location: </label>
-      <input id="locationInputEvents" type="text" name="locationInputEvents">
-    </div>
-    <div id="addressInputDivEvents">
-      <label id="addressLabelEvents" for="addressLabelEvents">Street Address: </label>
-      <input id="addressInputEvents" type="text" name="addressInputEvents">
-    </div>
-    <div id="cityInputDivEvents">
-      <label id="cityLabelEvents" for="cityLabelEvents">City: </label>
-      <input id="cityInputEvents" type="text" name="cityInputEvents">
-    </div>
-    <div id="stateInputDivEvents">
-      <label id="stateLabelEvents" for="stateLabelEvents">State: </label>
-      <input id="stateInputEvents" type="text" name="stateInputEvents">
-    </div>
-    <div id="zipInputDivEvents">
-      <label id="zipLabelEvents" for="zipLabelEvents">Zip Code: </label>
-      <input id="zipInputEvents" type="text" name="zipInputEvents">
-    </div>
-    <div id="buttonDivEvents">
-      <button type="button" id="eventsSubmitButton">Submit to a Higher Power</button>
-      <button type="button" id="cancelButtonEvents">Cancel Culture</button>
-    </div>
-  </div>
-</div>
 `
-targetFormLocation.innerHTML = eventsFormHtml
-      eventListeners.saveEvent();
-      eventListeners.cancel();
+    targetFormLocation.innerHTML = eventsFormHtml;
+    eventListenersEvents.saveEvent();
+    eventListenersEvents.cancelEvent();
   },
-
   printEvents() {
 
   },
-
   newEvents() {
     const targetNewEventButton = document.getElementById("newEventButton");
 
     targetNewEventButton.addEventListener("click", () => {
       console.log("newEvent Clicked")
-      eventListeners.printForm();
+      eventListenersEvents.printForm();
 
-    })
+    });
   },
-
   saveEvent() {
     const targetDomContainer = document.getElementById("eventsSubmitButton");
 
@@ -86,56 +84,49 @@ targetFormLocation.innerHTML = eventsFormHtml
         "city": targetCityInput.value,
         "state": targetStateInput.value,
         "zipCode": targetZipInput.value
-      }
+      };
 
       if (targetHiddenIdInput.value === "") {
 
         API.save(eventsEntry, "events").then(() => API.get("events").then(renderHtmlEvents))
-          .then(eventListeners.clearForm)
+          .then(eventListenersEvents.clearForm)
 
       } else {
 
         eventsEntry.id = parseInt(targetHiddenIdInput.value);
         API.update(eventsEntry, "events")
           .then(() => API.get("events").then(renderHtmlEvents))
-          .then(eventListeners.clearForm)
+          .then(eventListenersEvents.clearForm)
       }
-    })
+    });
   },
-  cancel() {
+  cancelEvent() {
     const targetButtonDiv = document.getElementById("buttonDivEvents");
 
     targetButtonDiv.addEventListener("click", event => {
 
       if (event.target.id.startsWith("cancelButton")) {
         console.log("clicked cancel")
-        eventListeners.clearForm();
-
+        eventListenersEvents.clearForm();
       }
-    })
+    });
   },
   editEvent() {
 
-    
-    
     const targetDom = document.getElementById("printLocationEvents");
 
     targetDom.addEventListener("click", event => {
       if (event.target.id.startsWith("editButtonEvents--")) {
 
-        eventListeners.printForm();
+        eventListenersEvents.printForm();
         const eventToEdit = event.target.id.split("--")[1];
 
-        eventListeners.updateEventFormFields(eventToEdit);
+        eventListenersEvents.updateEventFormFields(eventToEdit);
 
-        const cancelButton = `<button type="button" id="cancelButtonEvents">Cancel Culture</button>`
-        const targetButtonDiv = document.getElementById("buttonDivEvents");
-        eventListeners.printForm
-        eventListeners.updateEventFormFields(eventToEdit)
-
-        
+        eventListenersEvents.printForm
+        eventListenersEvents.updateEventFormFields(eventToEdit)
       }
-    })
+    });
   },
   updateEventFormFields(eventId) {
     const targetNameInput = document.getElementById("nameInputEvents");
@@ -157,7 +148,7 @@ targetFormLocation.innerHTML = eventsFormHtml
         targetCityInput.value = event.city;
         targetStateInput.value = event.state;
         targetZipInput.value = event.zipCode;
-      })
+      });
   },
   deleteEvent() {
     const targetDom = document.getElementById("printLocationEvents");
@@ -168,33 +159,18 @@ targetFormLocation.innerHTML = eventsFormHtml
 
         API.delete(eventToDelete, "events")
           .then(() => API.get("events").then(renderHtmlEvents))
-
       }
-    })
+    });
   },
   clearForm() {
-    // const targetNameInput = document.getElementById("nameInputEvents");
-    // const targetDateInput = document.getElementById("dateInputEvents");
-    // const targetLocationInput = document.getElementById("locationInputEvents");
-    // const targetAddressInput = document.getElementById("addressInputEvents");
-    // const targetCityInput = document.getElementById("cityInputEvents");
-    // const targetStateInput = document.getElementById("stateInputEvents");
-    // const targetZipInput = document.getElementById("zipInputEvents");
     const targetHiddenIdInput = document.getElementById("hiddenInputEvents");
 
-    // targetNameInput.value = ""
-    // targetDateInput.value = ""
-    // targetLocationInput.value = ""
-    // targetAddressInput.value = ""
-    // targetCityInput.value = ""
-    // targetStateInput.value = ""
-    // targetZipInput.value = ""
     targetHiddenIdInput.value = ""
 
     const targetDom = document.getElementById("entryFormEvents");
     targetDom.innerHTML = `<button type="button" id="newEventButton">New Event</button>`
-    eventListeners.newEvents();
+    eventListenersEvents.newEvents();
   }
-}
+};
 
-export default eventListeners;
+export default eventListenersEvents;
