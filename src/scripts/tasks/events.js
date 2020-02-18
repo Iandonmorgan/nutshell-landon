@@ -6,6 +6,7 @@ const taskBtn = document.querySelector("#tasks")
 const hiddenVal = document.querySelector("#hidden-input")
 const taskListContainer = document.querySelector("#tasks-list")
 
+// This function runs when 'Tasks' btn is clicked, and then opens up all other functions to run afterwards
 const openTasksForm = () => {
     taskBtn.addEventListener("click", () => {
         hiddenVal.value = 1;
@@ -30,21 +31,23 @@ const addSaveFunctionality = () => {
     }
 }
 
-// So this fn renders data to DOM, now need to work on checkbox btn click...
-// Should you do an if/else that checks if the checkbox has been clicked?
-// Need to do a PUT req to change the isComplete property value when checkbox
-// clicked....
+// GET all 'tasks' objs in DB, converts them to HTML and adds to DOM
 const addViewTasksFunctionality = () => {
     const viewTasksBtn = document.querySelector("#viewTasks")
 
     viewTasksBtn.addEventListener("click", () => {
         taskListContainer.innerHTML = ""
+        
         API.get("tasks").then(entries => entries.forEach(entry => {
-            taskListContainer.innerHTML += taskListFactory(entry)
+            if (entry.isComplete === false) {
+                taskListContainer.innerHTML += taskListFactory(entry)
+            }
         }))
     })
 }
 
+// Changes 'isComplete' property value in the 'tasks' DB from 'false' to 'true' for whichever item's/DB obj's checkbox is clicked
+// Now, need to re-render ONLY those DB obj's whose 'isComplete' val is false....
 const addCheckboxFunctionality = () => {
     taskListContainer.addEventListener("click", event => {
         if (event.target.id.startsWith("checkbox--")) {
