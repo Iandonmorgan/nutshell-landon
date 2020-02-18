@@ -1,6 +1,8 @@
 import renderHtmlEvents from "./domManagerEvents.js"
 import API from "../data.js";
 
+const activeId = 1;
+
 const eventListenersEvents = {
 
   printForm() {
@@ -48,7 +50,14 @@ const eventListenersEvents = {
     eventListenersEvents.cancelEvent();
   },
   printEvents() {
+    const targetHiddenIdInput = document.getElementById("hiddenUserId");
+    targetHiddenIdInput.value = activeId
+    eventListenersEvents.editEvent();
+    eventListenersEvents.deleteEvent();
+    eventListenersEvents.newEvents();
 
+    API.get("events")
+      .then(renderHtmlEvents)
   },
   newEvents() {
     const targetNewEventButton = document.getElementById("newEventButton");
@@ -158,8 +167,8 @@ const eventListenersEvents = {
 
         if (alert) {
 
-        API.delete(eventToDelete, "events")
-          .then(() => API.get("events").then(renderHtmlEvents))
+          API.delete(eventToDelete, "events")
+            .then(() => API.get("events").then(renderHtmlEvents))
         }
       }
     });
