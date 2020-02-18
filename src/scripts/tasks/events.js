@@ -75,13 +75,16 @@ const addDeleteFunctionality = () => {
             const objToDelete = event.target.id.split("--")[1]
             // SO, the delete is working, but for some reason it's only updating the DOM realtime
             // on every item delete AFTER the first item. The first item requires a pg refresh.
-            API.delete(objToDelete, "tasks")
-            taskListContainer.innerHTML = ""
-            API.get("tasks").then(entries => entries.forEach(entry => {
-                if (entry.isComplete === false) {
-                    taskListContainer.innerHTML += taskListFactory(entry)
-                }
-            }))
+            API.delete(objToDelete, "tasks").then(() => {
+                taskListContainer.innerHTML = ""
+                API.get("tasks").then(entries => entries.forEach(entry => {
+                    if (entry.isComplete === false) {
+                        taskListContainer.innerHTML += taskListFactory(entry)
+                    }
+                }))
+            })
+            // TRY TO add below code to .then on API.delete()
+            
         }
     })
 }
