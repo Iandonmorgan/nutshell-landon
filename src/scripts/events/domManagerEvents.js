@@ -16,6 +16,7 @@ const renderHtmlEvents = (events) => {
   const targetDom = document.getElementById("printLocationEvents");
 
   targetDom.innerHTML = "";
+  console.log(events)
 
   events.sort(function (a, b) {
     if (a.date < b.date) {

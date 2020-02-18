@@ -1,9 +1,24 @@
 import renderHtmlEvents from "./domManagerEvents.js"
 import API from "../data.js";
 
-const activeId = 1;
+const activeId = 3;
 
 const eventListenersEvents = {
+  
+  getAndPrintUserEvents() {
+    let renderArray = [];
+
+    API.get("events")
+      .then(events => {
+        events.map(object => {
+          if (object.userId === activeId) {
+            console.log("here it is", object)
+
+            renderArray.push(object)
+          }
+        }).then(renderHtmlEvents(renderArray))
+      })
+  },
 
   printForm() {
     const targetFormLocation = document.getElementById("entryFormEvents");
@@ -32,7 +47,7 @@ const eventListenersEvents = {
         </div>
         <div id="stateInputDivEvents">
           <label id="stateLabelEvents" for="stateLabelEvents">State: </label>
-          <input id="stateInputEvents" type="text" name="stateInputEvents">
+          <input id="stateInputEvents" type="text" name="stateInputEvents" maxlength=2>
         </div>
         <div id="zipInputDivEvents">
           <label id="zipLabelEvents" for="zipLabelEvents">Zip Code: </label>
@@ -49,6 +64,7 @@ const eventListenersEvents = {
     eventListenersEvents.saveEvent();
     eventListenersEvents.cancelEvent();
   },
+
   printEvents() {
     const targetHiddenIdInput = document.getElementById("hiddenUserId");
     targetHiddenIdInput.value = activeId
@@ -57,14 +73,14 @@ const eventListenersEvents = {
     eventListenersEvents.newEvents();
 
     API.get("events")
-      .then(renderHtmlEvents)
+    .then(eventListenersEvents.getAndPrintUserEvents())
   },
+
   newEvents() {
     const targetNewEventButton = document.getElementById("newEventButton");
 
     targetNewEventButton.addEventListener("click", () => {
       eventListenersEvents.printForm();
-
     });
   },
   saveEvent() {
@@ -93,20 +109,27 @@ const eventListenersEvents = {
         "zipCode": targetZipInput.value
       };
 
-      if (targetHiddenIdInput.value === "") {
+      if (targetNameInput.value === "") {
+        window.alert("pretty please Name your event")
+      } else if (targetDateInput.value === "") {
+        window.alert("pretty please add a Date")
+      } else if (targetLocationInput.value === "") {
+        window.alert("pretty please add a Location")
+      } else if (targetHiddenIdInput.value === "") {
 
-        API.save(eventsEntry, "events").then(() => API.get("events").then(renderHtmlEvents))
+        API.save(eventsEntry, "events").then(eventListenersEvents.getAndPrintUserEvents())
           .then(eventListenersEvents.clearForm)
 
       } else {
 
         eventsEntry.id = parseInt(targetHiddenIdInput.value);
         API.update(eventsEntry, "events")
-          .then(() => API.get("events").then(renderHtmlEvents))
+          .then(eventListenersEvents.getAndPrintUserEvents())
           .then(eventListenersEvents.clearForm)
       }
     });
   },
+
   cancelEvent() {
     const targetButtonDiv = document.getElementById("buttonDivEvents");
 
@@ -134,6 +157,7 @@ const eventListenersEvents = {
       }
     });
   },
+
   updateEventFormFields(eventId) {
     const targetNameInput = document.getElementById("nameInputEvents");
     const targetDateInput = document.getElementById("dateInputEvents");
@@ -156,6 +180,7 @@ const eventListenersEvents = {
         targetZipInput.value = event.zipCode;
       });
   },
+
   deleteEvent() {
     const targetDom = document.getElementById("printLocationEvents");
 
@@ -168,11 +193,12 @@ const eventListenersEvents = {
         if (alert) {
 
           API.delete(eventToDelete, "events")
-            .then(() => API.get("events").then(renderHtmlEvents))
+            .then(eventListenersEvents.getAndPrintUserEvents())
         }
       }
     });
   },
+
   clearForm() {
     const targetHiddenIdInput = document.getElementById("hiddenInputEvents");
 
