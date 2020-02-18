@@ -5,7 +5,6 @@ const eventListenersEvents = {
 
   printForm() {
     const targetFormLocation = document.getElementById("entryFormEvents");
-    console.log(targetFormLocation)
     const eventsFormHtml = `
       <div id="populateForm">
         
@@ -55,7 +54,6 @@ const eventListenersEvents = {
     const targetNewEventButton = document.getElementById("newEventButton");
 
     targetNewEventButton.addEventListener("click", () => {
-      console.log("newEvent Clicked")
       eventListenersEvents.printForm();
 
     });
@@ -106,7 +104,6 @@ const eventListenersEvents = {
     targetButtonDiv.addEventListener("click", event => {
 
       if (event.target.id.startsWith("cancelButton")) {
-        console.log("clicked cancel")
         eventListenersEvents.clearForm();
       }
     });
@@ -157,8 +154,13 @@ const eventListenersEvents = {
       if (event.target.id.startsWith("deleteButtonEvents")) {
         const eventToDelete = event.target.id.split("--")[1];
 
+        const alert = confirm("Are you sure you want to delete this event?")
+
+        if (alert) {
+
         API.delete(eventToDelete, "events")
           .then(() => API.get("events").then(renderHtmlEvents))
+        }
       }
     });
   },
