@@ -1,6 +1,6 @@
 import API from "../data.js";
-import articleHTMLManager from "./articleHTMLManager.js";
-import renderArticles from "./articleHTMLManager.js";
+import newArticleForm from "./articleHTMLManager.js";
+import renderArticles from "./articleDomManager.js";
 
 const articleEventListeners = {
   newArticleEventListener() {
@@ -9,7 +9,7 @@ const articleEventListeners = {
 
     newArticleBtn.addEventListener("click", () => {
       dashboardEl.textContent = "";
-      dashboardEl.innerHTML += articleHTMLManager.newArticleForm();
+      dashboardEl.innerHTML += newArticleForm();
       articleEventListeners.addSaveArticleEventListener();
     });
   },
@@ -33,12 +33,12 @@ const articleEventListeners = {
           title: newsTitleInput.value,
           synopsis: synopsisInput.value,
           url: urlInput.value,
-          timestamp: Date.now()
+          timeStamp: Date.now()
         };
 
         dashboardEl.textContent = "";
 
-        //function that renders the news article data
+        //function that updates the 'articles' database and renders the news articles to the DOM
         console.log("clicked save");
         API.save(newNewsArticleEntry, "articles")
           .then(() => API.get("articles").then(renderArticles))
