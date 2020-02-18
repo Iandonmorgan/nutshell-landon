@@ -2,7 +2,7 @@ import API from "../data.js";
 import newArticleForm from "./articleFormManager.js";
 import renderArticles from "./articleDomManager.js";
 
-const activeId = 4;
+const activeId = 2;
 
 const articleEventListeners = {
   newArticleEventListener() {
@@ -42,8 +42,8 @@ const articleEventListeners = {
         dashboardEl.textContent = "";
 
         API.save(newNewsArticleEntry, "articles")
-          .then(articleEventListeners.getArticlesByUserId())
-          .then(articleEventListeners.clearForm);
+          .then(articleEventListeners.clearForm)
+          .then(articleEventListeners.getArticlesByUserId());
       }
     });
   },
@@ -56,8 +56,9 @@ const articleEventListeners = {
         const alert = confirm("Are you sure you want to delete this article?");
 
         if (alert) {
-          API.delete(articleToDelete, "articles")
-            .then(articleEventListeners.getArticlesByUserId());
+          API.delete(articleToDelete, "articles").then(
+            articleEventListeners.getArticlesByUserId()
+          );
         }
       }
     });
@@ -102,14 +103,13 @@ const articleEventListeners = {
   getArticlesByUserId() {
     let renderArray = [];
 
-    API.get("articles")
-    .then(articles => {
+    API.get("articles").then(articles => {
       articles.map(object => {
-          if (object.userId === activeId) {
-            renderArray.push(object);
-          }
-        })
-        renderArticles(renderArray);
+        if (object.userId === activeId) {
+          renderArray.push(object);
+        }
+      });
+      renderArticles(renderArray);
     });
   }
 };
