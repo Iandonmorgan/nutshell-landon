@@ -108,7 +108,8 @@ const articleEventListeners = {
           if (object.userId === activeId) {
             renderArray.push(object);
           }
-        }).then(renderArticles(renderArray));
+        })
+        renderArticles(renderArray);
     });
   }
 };
