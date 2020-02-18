@@ -7,4 +7,4 @@ import eventListenersEvents from "./events/eventListeners.js"
 
 eventListenersEvents.printEvents();
 
-export default activeId;
+// export default activeId;
