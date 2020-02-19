@@ -86,6 +86,7 @@ const articleEventListeners = {
         dashboardEl.innerHTML += newArticleForm();
         articleEventListeners.updateArticleForm(articleToEdit);
         articleEventListeners.addSaveArticleEventListener();
+        articleEventListeners.cancelForm();
       }
     });
   },
