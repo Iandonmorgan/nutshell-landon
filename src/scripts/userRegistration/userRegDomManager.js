@@ -2,6 +2,7 @@ import userAuthenticationListeners from "./userRegEventListeners.js";
 import API from "../data.js";
 
 const loggedInHTML = `
+<div id="userLoginPrompt>
 <fieldset id="containerMessages">
 <button id="chatLogin">LOGIN TO CHAT</button>
 <input hidden="true" class="editInput"></input>
@@ -19,6 +20,7 @@ const loggedInHTML = `
 <input type="hidden" id="articleHiddenId" value="" />
 <article id="dashboardFormField"></article>
 <article id="newsArticles"></article>
+</div>
 `;
 const signInPrompt = `
 <fieldset id="signInPrompt">
@@ -47,8 +49,7 @@ const dashboardContainer = document.getElementById("container");
 
 const userRegistration = {
     inputFields() {
-        console.log("HELLO");
-        dashboardContainer.innerHTML = "HELLO" + signInPrompt;
+        dashboardContainer.innerHTML = signInPrompt;
         userAuthenticationListeners.createNewAcctListener();
         userAuthenticationListeners.loginListener();
     },
@@ -63,10 +64,10 @@ const userRegistration = {
         dashboardContainer.innerHTML = registerNewUserPrompt;
         userAuthenticationListeners.logInAsExistingUser();
     },
-    authorizedUser() {
+    authorizedUser(userId) {
         dashboardContainer.innerHTML = loggedInHTML;
         eventListenersEvents.printEvents();
-        const loggedInUserId = 2;
+        const loggedInUserId = userId;
         messagesListeners.logInListener(loggedInUserId);
         articleEventListeners.newsArticleEvents();
     }
