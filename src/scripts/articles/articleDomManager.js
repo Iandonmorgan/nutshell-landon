@@ -3,7 +3,7 @@ const makeNewsArticleComponent = newsArticle => {
   return `
       <h1>${newsArticle.title}</h1>
       <section>${newsArticle.synopsis}</section>
-      <article>${newsArticle.url}</article>
+      <article><a href="${newsArticle.url}">${newsArticle.url}</a></article>
       <button id="editNewsArticle--${newsArticle.id}" class="editBtn">Edit</button>
       <button id="deleteNewsArticle--${newsArticle.id}" class="deleteBtn">Delete</button>
       `;
