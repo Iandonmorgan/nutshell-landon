@@ -2,6 +2,8 @@ import API from "../data.js"
 import {renderForm} from "./dom.js"
 import {newTaskObj, taskListFactory, checkedTaskObj} from "./factory.js"
 
+let activeId = ""
+
 // STRETCH GOALS: 1) When save task btn clicked, remove text from the input fields 
 
 const taskBtn = document.querySelector("#tasks")
@@ -9,8 +11,9 @@ const hiddenVal = document.querySelector("#hidden-input")
 const taskListContainer = document.querySelector("#tasks-list")
 
 // This function runs when 'Tasks' btn is clicked, and then opens up all other functions to run afterwards
-const openTasksForm = () => {
+const openTasksForm = (id) => {
     taskBtn.addEventListener("click", () => {
+        activeId = id;
         // hiddenVal.value = 1;
         renderForm();
         addSaveFunctionality();
@@ -47,7 +50,7 @@ const addViewTasksFunctionality = () => {
         taskListContainer.innerHTML = ""
         
         API.get("tasks").then(entries => entries.forEach(entry => {
-            if (entry.isComplete === false) {
+            if (activeId === entry.userId && entry.isComplete === false) {
                 taskListContainer.innerHTML += taskListFactory(entry)
             }
         }))
@@ -81,7 +84,7 @@ const addDeleteFunctionality = () => {
             API.delete(objToDelete, "tasks").then(() => {
                 taskListContainer.innerHTML = ""
                 API.get("tasks").then(entries => entries.forEach(entry => {
-                    if (entry.isComplete === false) {
+                    if (activeId === entry.userId && entry.isComplete === false) {
                         taskListContainer.innerHTML += taskListFactory(entry)
                     }
                 }))

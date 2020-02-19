@@ -1,10 +1,3 @@
-// Here create factory object to be posted to /tasks in DB & factory HTML to 
-// be added to the DOM when GET(ing) the tasks
-
-// Bryan said to just set userId property to 1 for testing purposes, can make it dynamic later on.
-
-
-
 const newTaskObj = (val1, val2, idVal) => {
     if (idVal === undefined) {
         return {

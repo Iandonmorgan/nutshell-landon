@@ -10,17 +10,13 @@ import API from "./data.js";
     or the dashboard should be rendered.
 */
 
-// API.get("messages").then(objects => console.log(objects));
-// API.get("events").then(objects => console.log(objects));
-// API.get("articles").then(objects => console.log(objects));
-// API.get("friendships").then(objects => console.log(objects));
-// API.get("tasks").then(objects => console.log(objects));
-// API.get("users").then(objects => console.log(objects));
+sessionStorage.setItem("id", 2)
+const loggedInUserId = parseInt(sessionStorage.getItem("id"))
 
 // adding dynamic tasks form to DOM when 'Tasks' button clicked - Tyler
-openTasksForm()
+openTasksForm(loggedInUserId)
 
 
 eventListenersEvents.printEvents();
-const loggedInUserId = 2;
+// const loggedInUserId = 2;
 messagesListeners.logInListener(loggedInUserId);
