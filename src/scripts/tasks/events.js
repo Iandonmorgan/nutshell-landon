@@ -11,19 +11,20 @@ const taskListContainer = document.querySelector("#tasks-list")
 // This function runs when 'Tasks' btn is clicked, and then opens up all other functions to run afterwards
 const openTasksForm = () => {
     taskBtn.addEventListener("click", () => {
-        hiddenVal.value = 1;
+        // hiddenVal.value = 1;
         renderForm();
         addSaveFunctionality();
         addViewTasksFunctionality();
         addCheckboxFunctionality();
         addDeleteFunctionality();
         addEditFunctionality();
+        onKeypress();
     })
 }
 
 const addSaveFunctionality = () => {
     // Line 22 makes sure 'Tasks' button has been clicked to open form and access save btn
-    if (parseInt(hiddenVal.value) !== "") {
+    if (parseInt(hiddenVal.value) === "") {
         const saveBtn = document.querySelector("#submitTask")
 
         saveBtn.addEventListener("click", event => {
@@ -91,41 +92,58 @@ const addDeleteFunctionality = () => {
 // Andy was saying that each time I click on the task name to edit, the keypress event listeners are getting
 // saved to each previous name after the first one runs. Which is why it logs 2 on the 2nd task and then 3 on
 // the 3rd task.
+
+// I'm initializing the keypress event every time a task name is clicked, and that keypress listener is not 
+// going away, which is why they're stacking up...
 const addEditFunctionality = () => {
     taskListContainer.addEventListener("click", event => {
         if (event.target.id.startsWith("editName--")) {
             const nameInputField = document.getElementById("createTask")
             const dateInputField = document.getElementById("completionDate")
             const objIdToEdit = event.target.id.split("--")[1]
+
             
             API.edit(objIdToEdit, "tasks").then(resp => {
                 nameInputField.value = resp.name
                 dateInputField.value = resp.deadline
-                nameInputField.addEventListener("keypress", event => {
-                    if (event.charCode === 13) {
-                        event.preventDefault()
-                        const updatedName = nameInputField.value
-                        const updatedDate = dateInputField.value
-
-                        const updatedObj = newTaskObj(updatedName, updatedDate, resp.id)
-
-                        // For some reason it's logging this 
-                        console.log(updatedObj)
-                        API.update(updatedObj, "tasks")
-                        
-                        // Thinking I need to also repopulate the date inp, this way I can invoke the factory
-                        // function that creates an updated obj using 2 arguments... Then I can use PUT with 
-                        // that new obj...
-                        // const updatedObj = newTaskObj(updatedName, updatedDate)
-
-                        // Having trouble PUT(ing) the updated obj b/c the API method is trying to get an ID to 
-                        // find the DB obj to update... But my obj factory func doesn't have an ID property...
-                        // TODO: Can I somehow use the obj that comes back from API.edit()?
-                        // TODO: try a patch API to just update the name w/o whole new object..
-                        // API.update(updatedObj, "tasks")
-                    }
-                })
+                const hiddenInpField = document.getElementById("hidden-input")
+                hiddenInpField.value = resp.id
+                // TODO: move keypress event listener into a separate function and call it after this function...
+                
             })
+        }
+    })
+}
+
+const onKeypress = () => {
+    const nameInputField = document.getElementById("createTask")
+    const dateInputField = document.getElementById("completionDate")
+
+
+    nameInputField.addEventListener("keypress", event => {
+        if (event.charCode === 13) {
+            event.preventDefault()
+            const updatedName = nameInputField.value
+            const updatedDate = dateInputField.value
+            const hiddenInpField = document.getElementById("hidden-input")
+            const hiddenInpFieldId = hiddenInpField.value
+
+            const updatedObj = newTaskObj(updatedName, updatedDate, hiddenInpFieldId)
+
+            // For some reason it's logging this 
+            
+            API.update(updatedObj, "tasks")
+            
+            // Thinking I need to also repopulate the date inp, this way I can invoke the factory
+            // function that creates an updated obj using 2 arguments... Then I can use PUT with 
+            // that new obj...
+            // const updatedObj = newTaskObj(updatedName, updatedDate)
+
+            // Having trouble PUT(ing) the updated obj b/c the API method is trying to get an ID to 
+            // find the DB obj to update... But my obj factory func doesn't have an ID property...
+            // TODO: Can I somehow use the obj that comes back from API.edit()?
+            // TODO: try a patch API to just update the name w/o whole new object..
+            // API.update(updatedObj, "tasks")
         }
     })
 }
