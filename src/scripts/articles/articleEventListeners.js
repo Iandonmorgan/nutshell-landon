@@ -12,17 +12,27 @@ const articleEventListeners = {
     newArticleBtn.addEventListener("click", () => {
       dashboardEl.textContent = "";
       dashboardEl.innerHTML += newArticleForm();
-      articleEventListeners.addRecordArticleEventListener();
+      articleEventListeners.addSaveArticleEventListener();
+      articleEventListeners.cancelForm();
     });
   },
-  addRecordArticleEventListener() {
-    const recordBtn = document.getElementById("recordArticleBtn");
+  addSaveArticleEventListener() {
+    const recordBtn = document.getElementById("saveArticleBtn");
 
     recordBtn.addEventListener("click", () => {
       const newsTitleInput = document.getElementById("newsTitle");
       const synopsisInput = document.getElementById("synopsis");
       const urlInput = document.getElementById("articleUrl");
       const dashboardEl = document.getElementById("newsArticles");
+      const articleHiddenIdInput = document.getElementById("articleHiddenId");
+
+      const newNewsArticleEntry = {
+        title: newsTitleInput.value,
+        synopsis: synopsisInput.value,
+        url: urlInput.value,
+        timeStamp: Date.now(),
+        userId: activeId
+      };
 
       if (newsTitleInput.value === "") {
         alert("Please add a Title");
@@ -30,20 +40,21 @@ const articleEventListeners = {
         alert("please add a synopsis");
       } else if (urlInput.value === "") {
         alert("Please add a url link");
-      } else {
-        const newNewsArticleEntry = {
-          title: newsTitleInput.value,
-          synopsis: synopsisInput.value,
-          url: urlInput.value,
-          timeStamp: Date.now(),
-          userId: activeId
-        };
-
-        dashboardEl.textContent = "";
-
+      } else if (articleHiddenIdInput.value === "") {
         API.save(newNewsArticleEntry, "articles")
-          .then(articleEventListeners.clearForm)
-          .then(articleEventListeners.getArticlesByUserId());
+          .then(() => {
+            dashboardEl.textContent = "";
+            articleEventListeners.getArticlesByUserId();
+          })
+          .then(articleEventListeners.clearForm);
+      } else {
+        newNewsArticleEntry.id = parseInt(articleHiddenIdInput.value);
+        API.update(newNewsArticleEntry, "articles")
+          .then(() => {
+            dashboardEl.textContent = "";
+            articleEventListeners.getArticlesByUserId();
+          })
+          .then(articleEventListeners.clearForm);
       }
     });
   },
@@ -56,9 +67,9 @@ const articleEventListeners = {
         const alert = confirm("Are you sure you want to delete this article?");
 
         if (alert) {
-          API.delete(articleToDelete, "articles").then(
-            articleEventListeners.getArticlesByUserId()
-          );
+          API.delete(articleToDelete, "articles").then(() => {
+            articleEventListeners.getArticlesByUserId();
+          });
         }
       }
     });
@@ -74,7 +85,7 @@ const articleEventListeners = {
         dashboardEl.textContent = "";
         dashboardEl.innerHTML += newArticleForm();
         articleEventListeners.updateArticleForm(articleToEdit);
-        articleEventListeners.addRecordArticleEventListener();
+        articleEventListeners.addSaveArticleEventListener();
       }
     });
   },
@@ -110,6 +121,16 @@ const articleEventListeners = {
         }
       });
       renderArticles(renderArray);
+    });
+  },
+  cancelForm() {
+    const cancelBtn = document.getElementById("cancelFormBtn");
+    const dashboardEl = document.getElementById("dashboardFormField");
+
+    cancelBtn.addEventListener("click", event => {
+      if (event.target.id.startsWith("cancelFormBtn")) {
+        dashboardEl.textContent = "";
+      }
     });
   }
 };

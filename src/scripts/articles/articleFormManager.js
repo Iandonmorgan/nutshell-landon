@@ -16,7 +16,8 @@ const newArticleForm = () => {
         <fieldset class="articleFieldset">
             <label for="url">URL</label>
             <input type="text" name="articleUrl" id="articleUrl" /><br><br>
-            <button type="button" id="recordArticleBtn">Record Article</button>
+            <button type="button" id="saveArticleBtn">Save</button>
+            <button type="button" id="cancelFormBtn">Cancel</button>
         </fieldset>
         
     `;
