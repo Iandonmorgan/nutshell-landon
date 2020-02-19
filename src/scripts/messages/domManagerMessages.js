@@ -52,7 +52,7 @@ const chatMessages = {
             "message": message,
             "timeStamp": Date.now()
         };
-        chatMessages.clearUpdateInput();
+        // chatMessages.clearUpdateInput();
         API.update(objToSave, "messages");
     },
     clearUpdateInput() {
