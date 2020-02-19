@@ -1,4 +1,6 @@
 import messagesListeners from "./messages/messagesEventListeners.js";
+import newArticleEventListener from "./articles/articleEvents.js";
+import API from "./data.js";
 
 /*
     Import all the tools into main.js that are needed to display
