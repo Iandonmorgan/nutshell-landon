@@ -14,7 +14,7 @@ const htmlEvent = eventEntry => {
   `;
 };
 
-const renderHtmlEvents = events => {
+const renderHtmlEvents = (events, activeId) => {
   const targetDom = document.getElementById("printLocationEvents");
 
   targetDom.innerHTML = "";
@@ -32,6 +32,7 @@ const renderHtmlEvents = events => {
   events.forEach(element => {
     targetDom.innerHTML += htmlEvent(element);
   });
+
 };
 
 export default renderHtmlEvents;

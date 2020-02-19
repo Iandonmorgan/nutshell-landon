@@ -2,10 +2,8 @@ import renderHtmlEvents from "./domManagerEvents.js";
 import eventsFormHtml from "./eventsForm.js";
 import API from "../data.js";
 
-const activeId = 3;
-
 const eventListenersEvents = {
-  getAndPrintUserEvents() {
+  getAndPrintUserEvents(activeId) {
     let renderArray = [];
 
     API.get("events").then(events => {
@@ -14,6 +12,7 @@ const eventListenersEvents = {
           renderArray.push(object);
         }
         renderHtmlEvents(renderArray);
+        
       });
 
       const firstEventOnDom = document.querySelector(".eventOnDom");
@@ -21,33 +20,33 @@ const eventListenersEvents = {
     });
   },
 
-  printForm() {
+  printForm(activeId) {
     const targetFormLocation = document.getElementById("entryFormEvents");
 
     targetFormLocation.innerHTML = eventsFormHtml;
-    eventListenersEvents.saveEvent();
+    eventListenersEvents.saveEvent(activeId);
     eventListenersEvents.cancelEvent();
   },
 
-  printEvents() {
+  printEvents(activeId) {
     const targetHiddenIdInput = document.getElementById("hiddenUserId");
     targetHiddenIdInput.value = activeId;
     eventListenersEvents.editEvent();
-    eventListenersEvents.deleteEvent();
-    eventListenersEvents.newEvents();
+    eventListenersEvents.deleteEvent(activeId);
+    eventListenersEvents.newEvents(activeId);
 
-    eventListenersEvents.getAndPrintUserEvents();
+    eventListenersEvents.getAndPrintUserEvents(activeId);
   },
 
-  newEvents() {
+  newEvents(activeId) {
     const targetNewEventButton = document.getElementById("newEventButton");
 
     targetNewEventButton.addEventListener("click", () => {
-      eventListenersEvents.printForm();
+      eventListenersEvents.printForm(activeId);
     });
   },
 
-  saveEvent() {
+  saveEvent(activeId) {
     const targetDomContainer = document.getElementById("eventsSubmitButton");
     const targetDom = document.getElementById("printLocationEvents");
 
@@ -85,18 +84,21 @@ const eventListenersEvents = {
         API.save(eventsEntry, "events")
           .then(() => {
             targetDom.innerHTML = "";
-            eventListenersEvents.getAndPrintUserEvents();
+            eventListenersEvents.getAndPrintUserEvents(activeId);
           })
+          .then(eventListenersEvents.saveEvent(activeId))
           .then(eventListenersEvents.clearForm);
       } else {
         eventsEntry.id = parseInt(targetHiddenIdInput.value);
         API.update(eventsEntry, "events")
           .then(() => {
             targetDom.innerHTML = "";
-            eventListenersEvents.getAndPrintUserEvents();
+            eventListenersEvents.getAndPrintUserEvents(activeId);
           })
           .then(eventListenersEvents.clearForm);
       }
+  // eventListenersEvents.saveEvent(activeId)
+
     });
   },
 
@@ -148,7 +150,7 @@ const eventListenersEvents = {
     });
   },
 
-  deleteEvent() {
+  deleteEvent(activeId) {
     const targetDom = document.getElementById("printLocationEvents");
 
     targetDom.addEventListener("click", event => {
@@ -160,21 +162,21 @@ const eventListenersEvents = {
         if (alert) {
           API.delete(eventToDelete, "events").then(() => {
             targetDom.innerHTML = "";
-            eventListenersEvents.getAndPrintUserEvents();
+            eventListenersEvents.getAndPrintUserEvents(activeId);
           });
         }
       }
     });
   },
 
-  clearForm() {
+  clearForm(activeId) {
     const targetHiddenIdInput = document.getElementById("hiddenInputEvents");
 
     targetHiddenIdInput.value = "";
 
     const targetDom = document.getElementById("entryFormEvents");
     targetDom.innerHTML = `<button type="button" id="newEventButton">New Event</button>`;
-    eventListenersEvents.newEvents();
+    eventListenersEvents.newEvents(activeId);
   }
 };
 
