@@ -1,3 +1,38 @@
+/* events  below*/
+
 .firstEvent {
 background: rgb(150, 150, 219);
 }
+/* events above */
+
+/* MESSAGES STYLING START */
+
+#containerMessages {
+    border: 1px black dashed;
+    border-radius: 10px;
+    margin: 15px;
+    padding: 5px;
+}
+
+#chatLog {
+    padding-bottom: 10px;
+    height: 300px;
+    overflow-x: scroll;
+    overflow-anchor: bottom;
+}
+
+#chatLogin {
+    display: block;
+    max-width: 100px;
+    margin: 50px auto 50px auto;
+    background-color: lightblue;
+    font-weight: bolder;
+}
+
+legend {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bolder;
+    font-size: .5em;
+}
+
+/* MESSAGES STYLING END */

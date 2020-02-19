@@ -11,6 +11,11 @@
 
 <body>
   <article id="container">
+
+    <fieldset id="containerMessages">
+      <button id="chatLogin">LOGIN TO CHAT</button>
+      <input hidden="true" class="editInput"></input>
+    </fieldset>
     <div id="containerEvents">
       <input type="hidden" id="hiddenUserId" value="">
       <input type="hidden" id="hiddenInputEvents" value="">
@@ -20,6 +25,11 @@
       <div id="printLocationEvents">
       </div>
   </article>
+
+  <button type="button" id="newArticleBtn">New Article</button>
+  <input type="hidden" id="articleHiddenId" value="" />
+  <article id="dashboardFormField"></article>
+  <article id="newsArticles"></article>
 
   <script type="module" src="scripts/main.js"></script>
 
