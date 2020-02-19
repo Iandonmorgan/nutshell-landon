@@ -27,18 +27,18 @@ const openTasksForm = (id) => {
 
 const addSaveFunctionality = () => {
     // Line 22 makes sure 'Tasks' button has been clicked to open form and access save btn
-    if (parseInt(hiddenVal.value) === "") {
+    // if (parseInt(hiddenVal.value) === "") {
         const saveBtn = document.querySelector("#submitTask")
 
         saveBtn.addEventListener("click", event => {
             let taskVal = document.querySelector("#createTask").value
             let dateVal = document.querySelector("#completionDate").value
         
-            const newObj = newTaskObj(taskVal, dateVal)
+            const newObj = newTaskObj(taskVal, dateVal, activeId)
         
             API.save(newObj, "tasks")
         })
-    }
+    // }
 }
 
 // GET all 'tasks' objs in DB, finds only those whose 'isComplete' property value is false,
@@ -110,9 +110,7 @@ const addEditFunctionality = () => {
                 nameInputField.value = resp.name
                 dateInputField.value = resp.deadline
                 const hiddenInpField = document.getElementById("hidden-input")
-                hiddenInpField.value = resp.id
-                // TODO: move keypress event listener into a separate function and call it after this function...
-                
+                hiddenInpField.value = resp.id                
             })
         }
     })
@@ -131,7 +129,7 @@ const onKeypress = () => {
             const hiddenInpField = document.getElementById("hidden-input")
             const hiddenInpFieldId = hiddenInpField.value
 
-            const updatedObj = newTaskObj(updatedName, updatedDate, hiddenInpFieldId)
+            const updatedObj = newTaskObj(updatedName, updatedDate, activeId, hiddenInpFieldId)
 
             // For some reason it's logging this 
             
@@ -151,4 +149,4 @@ const onKeypress = () => {
     })
 }
 
-export {openTasksForm}
+export {openTasksForm, activeId}

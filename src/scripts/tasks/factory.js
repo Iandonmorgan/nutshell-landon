@@ -1,10 +1,12 @@
-const newTaskObj = (val1, val2, idVal) => {
+import {activeId} from "./events.js"
+
+const newTaskObj = (val1, val2, activeId, idVal) => {
     if (idVal === undefined) {
         return {
                 name: val1,
                 deadline: val2,
                 isComplete: false,
-                userId: 1
+                userId: activeId
             }
     } else {
         return {
@@ -12,7 +14,7 @@ const newTaskObj = (val1, val2, idVal) => {
             name: val1,
             deadline: val2,
             isComplete: false,
-            userId: 1
+            userId: activeId
         }
     }
 }

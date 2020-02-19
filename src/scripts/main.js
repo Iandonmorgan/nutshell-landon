@@ -10,7 +10,7 @@ import API from "./data.js";
     or the dashboard should be rendered.
 */
 
-sessionStorage.setItem("id", 2)
+sessionStorage.setItem("id", 1)
 const loggedInUserId = parseInt(sessionStorage.getItem("id"))
 
 // adding dynamic tasks form to DOM when 'Tasks' button clicked - Tyler
