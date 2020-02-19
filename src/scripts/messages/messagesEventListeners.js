@@ -2,7 +2,7 @@ import API from "../data.js";
 import chatMessages from "./domManagerMessages.js";
 
 const containerMessages = document.querySelector("#containerMessages");
-const chatDisplay = `<legend>nutshell Internet Relay Chat (nIRC)™ 2020_v1.2 ©</legend>
+const chatDisplay = `<legend align="right">nutshell Internet Relay Chat (nIRC)™ 2020_v1.2 ©</legend>
                     <div id="chatLog">
                         chat is loading...
                     </div>
