@@ -105,7 +105,7 @@ const addEditFunctionality = () => {
                         const updatedName = nameInputField.value
                         const updatedDate = dateInputField.value
 
-                        resp.name = updatedName
+                        
                         console.log(resp)
                         
                         // Thinking I need to also repopulate the date inp, this way I can invoke the factory
