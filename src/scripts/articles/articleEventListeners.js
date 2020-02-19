@@ -2,7 +2,7 @@ import API from "../data.js";
 import newArticleForm from "./articleFormManager.js";
 import renderArticles from "./articleDomManager.js";
 
-const activeId = 3;
+const activeId = 4;
 
 const articleEventListeners = {
   newArticleEventListener() {
@@ -133,7 +133,13 @@ const articleEventListeners = {
         dashboardEl.textContent = "";
       }
     });
+  },
+  newsArticleEvents() {
+    articleEventListeners.newArticleEventListener();
+    articleEventListeners.deleteArticle();
+    articleEventListeners.editArticle();
+    articleEventListeners.getArticlesByUserId();
   }
 };
 
-// export default articleEventListeners;
+export default articleEventListeners;
