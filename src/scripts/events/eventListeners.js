@@ -2,8 +2,10 @@ import renderHtmlEvents from "./domManagerEvents.js";
 import eventsFormHtml from "./eventsForm.js";
 import API from "../data.js";
 
+const activeId = 3;
+
 const eventListenersEvents = {
-  getAndPrintUserEvents(activeId) {
+  getAndPrintUserEvents() {
     let renderArray = [];
 
     API.get("events").then(events => {
@@ -20,33 +22,33 @@ const eventListenersEvents = {
     });
   },
 
-  printForm(activeId) {
+  printForm() {
     const targetFormLocation = document.getElementById("entryFormEvents");
 
     targetFormLocation.innerHTML = eventsFormHtml;
-    eventListenersEvents.saveEvent(activeId);
+    eventListenersEvents.saveEvent();
     eventListenersEvents.cancelEvent();
   },
 
-  printEvents(activeId) {
+  printEvents() {
     const targetHiddenIdInput = document.getElementById("hiddenUserId");
     targetHiddenIdInput.value = activeId;
     eventListenersEvents.editEvent();
-    eventListenersEvents.deleteEvent(activeId);
-    eventListenersEvents.newEvents(activeId);
+    eventListenersEvents.deleteEvent();
+    eventListenersEvents.newEvents();
 
-    eventListenersEvents.getAndPrintUserEvents(activeId);
+    eventListenersEvents.getAndPrintUserEvents();
   },
 
-  newEvents(activeId) {
+  newEvents() {
     const targetNewEventButton = document.getElementById("newEventButton");
 
     targetNewEventButton.addEventListener("click", () => {
-      eventListenersEvents.printForm(activeId);
+      eventListenersEvents.printForm();
     });
   },
 
-  saveEvent(activeId) {
+  saveEvent() {
     const targetDomContainer = document.getElementById("eventsSubmitButton");
     const targetDom = document.getElementById("printLocationEvents");
 
@@ -84,21 +86,19 @@ const eventListenersEvents = {
         API.save(eventsEntry, "events")
           .then(() => {
             targetDom.innerHTML = "";
-            eventListenersEvents.getAndPrintUserEvents(activeId);
+            eventListenersEvents.getAndPrintUserEvents();
           })
-          .then(eventListenersEvents.saveEvent(activeId))
+          .then(eventListenersEvents.saveEvent())
           .then(eventListenersEvents.clearForm);
       } else {
         eventsEntry.id = parseInt(targetHiddenIdInput.value);
         API.update(eventsEntry, "events")
           .then(() => {
             targetDom.innerHTML = "";
-            eventListenersEvents.getAndPrintUserEvents(activeId);
+            eventListenersEvents.getAndPrintUserEvents();
           })
           .then(eventListenersEvents.clearForm);
       }
-  // eventListenersEvents.saveEvent(activeId)
-
     });
   },
 
@@ -150,7 +150,7 @@ const eventListenersEvents = {
     });
   },
 
-  deleteEvent(activeId) {
+  deleteEvent() {
     const targetDom = document.getElementById("printLocationEvents");
 
     targetDom.addEventListener("click", event => {
@@ -162,21 +162,21 @@ const eventListenersEvents = {
         if (alert) {
           API.delete(eventToDelete, "events").then(() => {
             targetDom.innerHTML = "";
-            eventListenersEvents.getAndPrintUserEvents(activeId);
+            eventListenersEvents.getAndPrintUserEvents();
           });
         }
       }
     });
   },
 
-  clearForm(activeId) {
+  clearForm() {
     const targetHiddenIdInput = document.getElementById("hiddenInputEvents");
 
     targetHiddenIdInput.value = "";
 
     const targetDom = document.getElementById("entryFormEvents");
     targetDom.innerHTML = `<button type="button" id="newEventButton">New Event</button>`;
-    eventListenersEvents.newEvents(activeId);
+    eventListenersEvents.newEvents();
   }
 };
 

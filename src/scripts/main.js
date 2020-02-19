@@ -5,6 +5,6 @@ import eventListenersEvents from "./events/eventListeners.js"
     or the dashboard should be rendered.
 */
 const activeId = 1;
-eventListenersEvents.printEvents(activeId);
+eventListenersEvents.printEvents();
 
 // export default activeId;
