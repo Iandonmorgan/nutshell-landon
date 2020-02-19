@@ -2,22 +2,23 @@ import API from "../data.js";
 import newArticleForm from "./articleFormManager.js";
 import renderArticles from "./articleDomManager.js";
 
-const activeId = 3;
+const activeId = 4;
 
 const articleEventListeners = {
   newArticleEventListener() {
     const newArticleBtn = document.getElementById("newArticleBtn");
-    const dashboardEl = document.getElementById("dashboardFormField");
+    const formEl = document.getElementById("dashboardFormField");
 
     newArticleBtn.addEventListener("click", () => {
-      dashboardEl.textContent = "";
-      dashboardEl.innerHTML += newArticleForm();
+      formEl.textContent = "";
+      formEl.innerHTML += newArticleForm();
       articleEventListeners.addSaveArticleEventListener();
       articleEventListeners.cancelForm();
     });
   },
   addSaveArticleEventListener() {
     const recordBtn = document.getElementById("saveArticleBtn");
+    const formEl = document.getElementById("dashboardFormField");
 
     recordBtn.addEventListener("click", () => {
       const newsTitleInput = document.getElementById("newsTitle");
@@ -54,7 +55,11 @@ const articleEventListeners = {
             dashboardEl.textContent = "";
             articleEventListeners.getArticlesByUserId();
           })
-          .then(articleEventListeners.clearForm);
+          .then(() => {
+            articleHiddenIdInput.value = "";
+            articleEventListeners.clearForm();
+            formEl.textContent = "";
+          });
       }
     });
   },
@@ -133,6 +138,12 @@ const articleEventListeners = {
         dashboardEl.textContent = "";
       }
     });
+  },
+  newsArticleEvents() {
+    articleEventListeners.newArticleEventListener();
+    articleEventListeners.deleteArticle();
+    articleEventListeners.editArticle();
+    articleEventListeners.getArticlesByUserId();
   }
 };
 

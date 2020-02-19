@@ -1,6 +1,6 @@
 import eventListenersEvents from "./events/eventListeners.js"
 import messagesListeners from "./messages/messagesEventListeners.js";
-import newArticleEventListener from "./articles/articleEvents.js";
+import articleEventListeners from "./articles/articleEventListeners.js";
 import API from "./data.js";
 
 /*
@@ -11,3 +11,4 @@ import API from "./data.js";
 eventListenersEvents.printEvents();
 const loggedInUserId = 2;
 messagesListeners.logInListener(loggedInUserId);
+articleEventListeners.newsArticleEvents();
