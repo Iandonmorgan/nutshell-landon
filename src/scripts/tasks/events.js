@@ -104,15 +104,20 @@ const addEditFunctionality = () => {
                         event.preventDefault()
                         const updatedName = nameInputField.value
                         const updatedDate = dateInputField.value
+
+                        resp.name = updatedName
+                        console.log(resp)
                         
                         // Thinking I need to also repopulate the date inp, this way I can invoke the factory
                         // function that creates an updated obj using 2 arguments... Then I can use PUT with 
                         // that new obj...
-                        const updatedObj = newTaskObj(updatedName, updatedDate)
+                        // const updatedObj = newTaskObj(updatedName, updatedDate)
+
                         // Having trouble PUT(ing) the updated obj b/c the API method is trying to get an ID to 
                         // find the DB obj to update... But my obj factory func doesn't have an ID property...
-                        // Can I somehow use the obj the comes back from API.edit()?
-                        API.update(updatedObj, "tasks")
+                        // TODO: Can I somehow use the obj that comes back from API.edit()?
+                        // TODO: try a patch API to just update the name w/o whole new object..
+                        // API.update(updatedObj, "tasks")
                     }
                 })
             })
