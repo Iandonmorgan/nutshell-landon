@@ -1,4 +1,7 @@
 import {openTasksForm} from "./tasks/events.js"
+import messagesListeners from "./messages/messagesEventListeners.js";
+import newArticleEventListener from "./articles/articleEvents.js";
+import API from "./data.js";
 
 /*
     Import all the tools into main.js that are needed to display
@@ -15,3 +18,7 @@ import {openTasksForm} from "./tasks/events.js"
 
 // adding dynamic tasks form to DOM when 'Tasks' button clicked - Tyler
 openTasksForm()
+
+
+const loggedInUserId = 2;
+messagesListeners.logInListener(loggedInUserId);

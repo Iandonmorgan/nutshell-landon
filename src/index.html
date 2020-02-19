@@ -12,6 +12,10 @@
 <body>
   <article id="container">
 
+    <fieldset id="containerMessages">
+      <button id="chatLogin">LOGIN TO CHAT</button>
+      <input hidden="true" class="editInput"></input>
+    </fieldset>
     <div id="containerEvents">
       <div id="entryFormEvents">
 
@@ -75,6 +79,10 @@
 
   </article>
 
+  <button type="button" id="newArticleBtn">New Article</button>
+  <input type="hidden" id="articleHiddenId" value="" />
+  <article id="dashboardFormField"></article>
+  <article id="newsArticles"></article>
   <script type="module" src="scripts/events/events.js"></script>
 
   <script type="module" src="scripts/main.js"></script>
