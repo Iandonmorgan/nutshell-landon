@@ -105,8 +105,10 @@ const addEditFunctionality = () => {
                         const updatedName = nameInputField.value
                         const updatedDate = dateInputField.value
 
-                        
-                        console.log(resp)
+                        // newTaskObj(updatedName, updatedDate, resp.id)
+
+                        // For some reason it's logging this 
+                        console.log(newTaskObj(updatedName, updatedDate, resp.id))
                         
                         // Thinking I need to also repopulate the date inp, this way I can invoke the factory
                         // function that creates an updated obj using 2 arguments... Then I can use PUT with 
