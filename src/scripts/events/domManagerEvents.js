@@ -1,4 +1,4 @@
-const htmlEvent = (eventEntry) => {
+const htmlEvent = eventEntry => {
   return `
   <div class = "eventOnDom">
   <input type="hidden" id="hidden--${eventEntry.userId}"/>
@@ -11,15 +11,15 @@ const htmlEvent = (eventEntry) => {
   <button type="button" id="editButtonEvents--${eventEntry.id}">Edit</button>
   <button type="button" id="deleteButtonEvents--${eventEntry.id}">Delete</button>
   </div>
-  `
+  `;
 };
 
-const renderHtmlEvents = (events) => {
+const renderHtmlEvents = events => {
   const targetDom = document.getElementById("printLocationEvents");
 
   targetDom.innerHTML = "";
 
-  events.sort(function (a, b) {
+  events.sort(function(a, b) {
     if (a.date < b.date) {
       return -1;
     }
@@ -30,9 +30,8 @@ const renderHtmlEvents = (events) => {
   });
 
   events.forEach(element => {
-    targetDom.innerHTML += htmlEvent(element)
-
+    targetDom.innerHTML += htmlEvent(element);
   });
 };
 
-export default renderHtmlEvents
+export default renderHtmlEvents;

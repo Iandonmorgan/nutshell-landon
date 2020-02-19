@@ -5,7 +5,6 @@ import API from "../data.js";
 const activeId = 3;
 
 const eventListenersEvents = {
-
   getAndPrintUserEvents() {
     let renderArray = [];
 
@@ -16,6 +15,7 @@ const eventListenersEvents = {
         }
         renderHtmlEvents(renderArray);
       });
+
       const firstEventOnDom = document.querySelector(".eventOnDom");
       firstEventOnDom.classList.add("firstEvent");
     });
@@ -49,6 +49,7 @@ const eventListenersEvents = {
 
   saveEvent() {
     const targetDomContainer = document.getElementById("eventsSubmitButton");
+    const targetDom = document.getElementById("printLocationEvents");
 
     targetDomContainer.addEventListener("click", () => {
       const targetUserId = document.getElementById("hiddenUserId");
@@ -82,12 +83,18 @@ const eventListenersEvents = {
         window.alert("pretty please add a Location");
       } else if (targetHiddenIdInput.value === "") {
         API.save(eventsEntry, "events")
-          .then(eventListenersEvents.getAndPrintUserEvents())
+          .then(() => {
+            targetDom.innerHTML = "";
+            eventListenersEvents.getAndPrintUserEvents();
+          })
           .then(eventListenersEvents.clearForm);
       } else {
         eventsEntry.id = parseInt(targetHiddenIdInput.value);
         API.update(eventsEntry, "events")
-          .then(eventListenersEvents.getAndPrintUserEvents())
+          .then(() => {
+            targetDom.innerHTML = "";
+            eventListenersEvents.getAndPrintUserEvents();
+          })
           .then(eventListenersEvents.clearForm);
       }
     });
@@ -102,7 +109,7 @@ const eventListenersEvents = {
       }
     });
   },
-  
+
   editEvent() {
     const targetDom = document.getElementById("printLocationEvents");
 
@@ -151,9 +158,10 @@ const eventListenersEvents = {
         const alert = confirm("Are you sure you want to delete this event?");
 
         if (alert) {
-          API.delete(eventToDelete, "events").then(
-            eventListenersEvents.getAndPrintUserEvents()
-          );
+          API.delete(eventToDelete, "events").then(() => {
+            targetDom.innerHTML = "";
+            eventListenersEvents.getAndPrintUserEvents();
+          });
         }
       }
     });
