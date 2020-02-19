@@ -68,6 +68,7 @@ const userRegistration = {
         eventListenersEvents.printEvents();
         const loggedInUserId = 2;
         messagesListeners.logInListener(loggedInUserId);
+        articleEventListeners.newsArticleEvents();
     }
 
 }
