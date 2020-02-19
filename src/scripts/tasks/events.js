@@ -88,7 +88,9 @@ const addDeleteFunctionality = () => {
         }
     })
 }
-
+// Andy was saying that each time I click on the task name to edit, the keypress event listeners are getting
+// saved to each previous name after the first one runs. Which is why it logs 2 on the 2nd task and then 3 on
+// the 3rd task.
 const addEditFunctionality = () => {
     taskListContainer.addEventListener("click", event => {
         if (event.target.id.startsWith("editName--")) {
@@ -105,10 +107,11 @@ const addEditFunctionality = () => {
                         const updatedName = nameInputField.value
                         const updatedDate = dateInputField.value
 
-                        // newTaskObj(updatedName, updatedDate, resp.id)
+                        const updatedObj = newTaskObj(updatedName, updatedDate, resp.id)
 
                         // For some reason it's logging this 
-                        console.log(newTaskObj(updatedName, updatedDate, resp.id))
+                        console.log(updatedObj)
+                        API.update(updatedObj, "tasks")
                         
                         // Thinking I need to also repopulate the date inp, this way I can invoke the factory
                         // function that creates an updated obj using 2 arguments... Then I can use PUT with 
