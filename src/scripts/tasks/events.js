@@ -130,4 +130,4 @@ const onKeypress = () => {
     })
 }
 
-export {openTasksForm}
+export default openTasksForm
