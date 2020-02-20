@@ -30,8 +30,8 @@ const eventListenersEvents = {
     eventListenersEvents.cancelEvent();
   },
 
-  printEvents(userId) { // landon updated this line
-    activeId = userId; // landon added this line
+  printEvents(userId) {
+    activeId = userId;
     const targetHiddenIdInput = document.getElementById("hiddenUserId");
     targetHiddenIdInput.value = activeId;
     eventListenersEvents.editEvent();

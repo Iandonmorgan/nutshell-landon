@@ -3,26 +3,38 @@ import API from "../data.js";
 import eventListenersEvents from "../events/eventListeners.js";
 import messagesListeners from "../messages/messagesEventListeners.js";
 import articleEventListeners from "../articles/articleEventListeners.js";
+import openTasksForm from "../tasks/events.js";
 
 const loggedInHTML = `
 <div id="userLoginPrompt">
-<fieldset id="containerMessages">
-<button id="chatLogin">LOGIN TO CHAT</button>
-<input hidden="true" class="editInput"></input>
-</fieldset>
-<div id="containerEvents">
-<input type="hidden" id="hiddenUserId" value="">
-<input type="hidden" id="hiddenInputEvents" value="">
-<div id="entryFormEvents">
-  <button type="button" id="newEventButton">New Event</button>
-</div>
-<div id="printLocationEvents">
-</div>
+    <fieldset id="containerMessages">
+      <button id="chatLogin">LOGIN TO CHAT</button>
+      <input hidden="true" class="editInput"></input>
+    </fieldset>
+    <div id="containerEvents">
+      <input type="hidden" id="hiddenUserId" value="">
+      <input type="hidden" id="hiddenInputEvents" value="">
+      <div id="entryFormEvents">
+        <button type="button" id="newEventButton">New Event</button>
+      </div>
+      <div id="printLocationEvents">
+      </div>
+    </div>
 
-<button type="button" id="newArticleBtn">New Article</button>
-<input type="hidden" id="articleHiddenId" value="" />
-<article id="dashboardFormField"></article>
-<article id="newsArticles"></article>
+    <div id="tasks-container">
+      <button id="tasks">Tasks</button>
+      <input type="hidden" id="hidden-input" value="">
+      <div id="tasks-form">
+        
+      </div>
+      <div id="tasks-list">
+        
+      </div>
+    </div>
+    <button type="button" id="newArticleBtn">New Article</button>
+    <input type="hidden" id="articleHiddenId" value="" />
+    <article id="dashboardFormField"></article>
+    <article id="newsArticles"></article>
 </div>
 `;
 
@@ -39,6 +51,7 @@ const signInPrompt = `
 `;
 
 const registerNewUserPrompt = `
+<div id=alert></div>
 <fieldset id="registerNewUserPrompt">
 <div>username: <input id="registerNewUserNameInput" type="text"></input></div>
 <div>email: <input id="registerNewUserEmailInput" type="email"></input></div>
@@ -99,6 +112,7 @@ const userRegistration = {
         eventListenersEvents.printEvents(userId);
         messagesListeners.logInListener(userId);
         articleEventListeners.newsArticleEvents(userId);
+        openTasksForm(userId);
     }
 
 }

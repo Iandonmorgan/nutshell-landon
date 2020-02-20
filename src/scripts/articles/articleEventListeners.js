@@ -45,7 +45,7 @@ const articleEventListeners = {
         API.save(newNewsArticleEntry, "articles")
           .then(() => {
             dashboardEl.textContent = "";
-            articleEventListeners.getArticlesByUserId();
+            articleEventListeners.getArticlesByUserId(activeId);
           })
           .then(articleEventListeners.clearForm);
       } else {
@@ -53,7 +53,7 @@ const articleEventListeners = {
         API.update(newNewsArticleEntry, "articles")
           .then(() => {
             dashboardEl.textContent = "";
-            articleEventListeners.getArticlesByUserId();
+            articleEventListeners.getArticlesByUserId(activeId);
           })
           .then(() => {
             articleHiddenIdInput.value = "";
@@ -73,7 +73,7 @@ const articleEventListeners = {
 
         if (alert) {
           API.delete(articleToDelete, "articles").then(() => {
-            articleEventListeners.getArticlesByUserId();
+            articleEventListeners.getArticlesByUserId(activeId);
           });
         }
       }
@@ -117,9 +117,10 @@ const articleEventListeners = {
     synopsisInput.value = "";
     urlInput.value = "";
   },
-  getArticlesByUserId(userId) { // landon updated this line
+  getArticlesByUserId(userId) {
+    console.log(userId);
     let renderArray = [];
-    activeId = userId; // landon added this line
+    activeId = userId;
     API.get("articles").then(articles => {
       articles.map(object => {
         if (object.userId === activeId) {

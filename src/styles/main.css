@@ -3,6 +3,18 @@
 .firstEvent {
 background: rgb(150, 150, 219);
 }
+
+.eventOnDom {
+    border: 1px black dashed;
+    border-radius: 10px;
+    margin: 15px;
+    padding: 5px;
+}
+
+#printLocationEvents {
+    display: flex;
+    flex-wrap: wrap;
+}
 /* events above */
 
 /* MESSAGES STYLING START */
@@ -43,3 +55,45 @@ legend {
 }
 
 /* MESSAGES STYLING END */
+
+
+/* TASKS STYLING START */
+
+#tasks-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.task-item {
+    border: 1px black dashed;
+    border-radius: 10px;
+    margin: 15px;
+    padding: 5px;
+}
+
+
+/* TASKS STYLING END */
+
+
+/* ARTICLES STYLING START */
+
+#newsArticles {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.newsArticle {
+    border: 1px black dashed;
+    border-radius: 10px;
+    margin: 15px;
+    padding: 5px;
+}
+
+.articleURL {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: .7em;
+    text-align: right;
+    font-weight: bolder;
+}
+
+/* ARTICLES STYLING END */
