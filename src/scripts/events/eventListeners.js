@@ -2,7 +2,7 @@ import renderHtmlEvents from "./domManagerEvents.js";
 import eventsFormHtml from "./eventsForm.js";
 import API from "../data.js";
 
-const activeId = 3;
+let activeId = 1;
 
 const eventListenersEvents = {
   getAndPrintUserEvents() {
@@ -14,11 +14,13 @@ const eventListenersEvents = {
           renderArray.push(object);
         }
         renderHtmlEvents(renderArray);
-        
-      });
 
-      const firstEventOnDom = document.querySelector(".eventOnDom");
-      firstEventOnDom.classList.add("firstEvent");
+      });
+      if (renderArray.length !== 0) {
+
+        const firstEventOnDom = document.querySelector(".eventOnDom");
+        firstEventOnDom.classList.add("firstEvent");
+      }
     });
   },
 
@@ -30,7 +32,8 @@ const eventListenersEvents = {
     eventListenersEvents.cancelEvent();
   },
 
-  printEvents() {
+  printEvents(userId) {
+    activeId = userId;
     const targetHiddenIdInput = document.getElementById("hiddenUserId");
     targetHiddenIdInput.value = activeId;
     eventListenersEvents.editEvent();

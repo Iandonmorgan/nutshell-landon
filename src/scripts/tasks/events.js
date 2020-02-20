@@ -2,16 +2,15 @@ import API from "../data.js"
 import {renderForm} from "./dom.js"
 import {newTaskObj, taskListFactory} from "./factory.js"
 
-let activeId = ""
+let activeId = "";
 
 // TODO: When save task btn clicked, remove text from the input fields 
 // TODO: Add a confirm message on delete btn click
 
-const taskBtn = document.querySelector("#tasks")
-const taskListContainer = document.querySelector("#tasks-list")
 
 // This function runs when 'Tasks' btn is clicked, and then opens up all other functions to run afterwards
 const openTasksForm = (id) => {
+    const taskBtn = document.getElementById("tasks");
     taskBtn.addEventListener("click", () => {
         // value of the id param is passed in in main.js... And multiple functions in this scope use activeId
         activeId = id;
@@ -26,23 +25,24 @@ const openTasksForm = (id) => {
 }
 
 const addSaveFunctionality = () => {
-        const saveBtn = document.querySelector("#submitTask")
-
-        saveBtn.addEventListener("click", event => {
-            let taskVal = document.querySelector("#createTask").value
-            let dateVal = document.querySelector("#completionDate").value
+    const saveBtn = document.querySelector("#submitTask")
+    
+    saveBtn.addEventListener("click", event => {
+        let taskVal = document.querySelector("#createTask").value
+        let dateVal = document.querySelector("#completionDate").value
         
-            const newObj = newTaskObj(taskVal, dateVal, activeId)
+        const newObj = newTaskObj(taskVal, dateVal, activeId)
         
-            API.save(newObj, "tasks")
-        })
+        API.save(newObj, "tasks")
+    })
 }
 
 // GETs 'tasks' objs in DB. Finds only those whose 'isComplete' property value is false, and whose 'userId' property value matches
 // the logged-in user's id value. Then converts these objs to HTML and adds to DOM.
 const addViewTasksFunctionality = () => {
     const viewTasksBtn = document.querySelector("#viewTasks")
-
+    const taskListContainer = document.querySelector("#tasks-list");
+    
     viewTasksBtn.addEventListener("click", () => {
         taskListContainer.innerHTML = ""
         
@@ -56,10 +56,11 @@ const addViewTasksFunctionality = () => {
 
 // Changes 'isComplete' property value in the 'tasks' DB array from 'false' to 'true' for whichever item's checkbox is clicked
 const addCheckboxFunctionality = () => {
+    const taskListContainer = document.querySelector("#tasks-list");
     taskListContainer.addEventListener("click", event => {
         if (event.target.id.startsWith("checkbox--")) {
             const objToEditId = event.target.id.split("--")[1]
-
+            
             API.edit(objToEditId, "tasks").then(resp => {
                 resp.isComplete = true;
                 API.update(resp, "tasks")
@@ -71,6 +72,7 @@ const addCheckboxFunctionality = () => {
 // Deletes task from DB and from task container in DOM on 'Delete' btn click, then re-displays all remaining uncompleted tasks for
 // the matching logged-in user (activeId).
 const addDeleteFunctionality = () => {
+    const taskListContainer = document.querySelector("#tasks-list");
     taskListContainer.addEventListener("click", event => {
         if (event.target.id.startsWith("deleteBtn--")) {
             const objToDelete = event.target.id.split("--")[1]
@@ -88,6 +90,7 @@ const addDeleteFunctionality = () => {
 }
 // Event listener for when task name clicked on, DOM user interface repopulates with the task being updated.
 const addEditFunctionality = () => {
+    const taskListContainer = document.querySelector("#tasks-list");
     taskListContainer.addEventListener("click", event => {
         if (event.target.id.startsWith("editName--")) {
             const nameInputField = document.getElementById("createTask")

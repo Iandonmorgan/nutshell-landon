@@ -30,8 +30,8 @@ const eventsFormHtml = `
           <input id="zipInputEvents" type="text" name="zipInputEvents">
         </div>
         <div id="buttonDivEvents">
-          <button type="button" id="eventsSubmitButton">Submit to a Higher Power</button>
-          <button type="button" id="cancelButtonEvents">Cancel Culture</button>
+          <button type="button" id="eventsSubmitButton">Save Event</button>
+          <button type="button" id="cancelButtonEvents">Cancel</button>
         </div>
       </div>
     </div>

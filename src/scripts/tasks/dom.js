@@ -1,7 +1,7 @@
-const tasksForm = document.querySelector("#tasks-form")
 
 // Making dynamic form to create/edit tasks
 const renderForm = () => {
+    const tasksForm = document.querySelector("#tasks-form");
     return tasksForm.innerHTML = `
         <form>
             <label for="createTask">Task Name</label>

@@ -2,7 +2,7 @@ import API from "../data.js";
 import newArticleForm from "./articleFormManager.js";
 import renderArticles from "./articleDomManager.js";
 
-const activeId = 4;
+let activeId = 1;
 
 const articleEventListeners = {
   newArticleEventListener() {
@@ -45,7 +45,7 @@ const articleEventListeners = {
         API.save(newNewsArticleEntry, "articles")
           .then(() => {
             dashboardEl.textContent = "";
-            articleEventListeners.getArticlesByUserId();
+            articleEventListeners.getArticlesByUserId(activeId);
           })
           .then(articleEventListeners.clearForm);
       } else {
@@ -53,7 +53,7 @@ const articleEventListeners = {
         API.update(newNewsArticleEntry, "articles")
           .then(() => {
             dashboardEl.textContent = "";
-            articleEventListeners.getArticlesByUserId();
+            articleEventListeners.getArticlesByUserId(activeId);
           })
           .then(() => {
             articleHiddenIdInput.value = "";
@@ -73,7 +73,7 @@ const articleEventListeners = {
 
         if (alert) {
           API.delete(articleToDelete, "articles").then(() => {
-            articleEventListeners.getArticlesByUserId();
+            articleEventListeners.getArticlesByUserId(activeId);
           });
         }
       }
@@ -117,9 +117,9 @@ const articleEventListeners = {
     synopsisInput.value = "";
     urlInput.value = "";
   },
-  getArticlesByUserId() {
+  getArticlesByUserId(userId) {
     let renderArray = [];
-
+    activeId = userId;
     API.get("articles").then(articles => {
       articles.map(object => {
         if (object.userId === activeId) {
@@ -139,11 +139,11 @@ const articleEventListeners = {
       }
     });
   },
-  newsArticleEvents() {
+  newsArticleEvents(userId) {
     articleEventListeners.newArticleEventListener();
     articleEventListeners.deleteArticle();
     articleEventListeners.editArticle();
-    articleEventListeners.getArticlesByUserId();
+    articleEventListeners.getArticlesByUserId(userId);
   }
 };
 
