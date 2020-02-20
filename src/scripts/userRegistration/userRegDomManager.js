@@ -27,6 +27,7 @@ const loggedInHTML = `
 `;
 
 const signInPrompt = `
+<div id=alert></div>
 <fieldset id="signInPrompt">
 <legend align="right">WELCOME TO nUTSHELL</legend>
 <div>username: <input id="userNameInput" type="text"></input></div>
@@ -60,6 +61,7 @@ const userRegistration = {
     },
     logIn(userNameInput, userPasswordInput) {
         let userLoginAuth = false;
+        let match = "";
         let authUserId = "";
         API.get("users").then(objects => {
             for (let i = 0; i < objects.length; i++) {
@@ -68,12 +70,21 @@ const userRegistration = {
                         userLoginAuth = true;
                         sessionStorage.setItem("user", JSON.stringify(objects[i]));
                         authUserId = (JSON.parse(sessionStorage.getItem("user"))).id; // use this code to add a conditional somewhere else.... if getItem("user") = null reload login; if getItem("user") has value, load that dashboard.
+                    } else {
+                        document.getElementById("alert").innerHTML = "";
+                        setTimeout(function () { document.getElementById("alert").innerHTML = `While I appreciate your login attempt, I regret to inform you it was unsuccessful as your username and/or your password are incorrect. Please try again.` }, 180);
                     }
                 }
-            }
-            if (userLoginAuth === true) {
-                userRegistration.authorizedUser(authUserId);
+                if (userLoginAuth === true) {
+                    userRegistration.authorizedUser(authUserId);
 
+                }
+            }
+            match = (objects.find(obj => obj.email.toUpperCase() === userNameInput.toUpperCase()));
+            match = (objects.find(obj => obj.username.toUpperCase() === userNameInput.toUpperCase()));
+            if (match === undefined) {
+                document.getElementById("alert").innerHTML = "";
+                setTimeout(function () { document.getElementById("alert").innerHTML = `While I appreciate your login attempt, I regret to inform you it was unsuccessful as your username and/or your password are incorrect. Please try again.` }, 180);
             }
         });
     },

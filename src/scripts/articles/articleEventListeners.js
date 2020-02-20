@@ -2,11 +2,7 @@ import API from "../data.js";
 import newArticleForm from "./articleFormManager.js";
 import renderArticles from "./articleDomManager.js";
 
-<<<<<<< HEAD
 let activeId = 1;
-=======
-const activeId = 4;
->>>>>>> master
 
 const articleEventListeners = {
   newArticleEventListener() {
@@ -143,19 +139,11 @@ const articleEventListeners = {
       }
     });
   },
-<<<<<<< HEAD
   newsArticleEvents(userId) {
     articleEventListeners.newArticleEventListener();
     articleEventListeners.deleteArticle();
     articleEventListeners.editArticle();
     articleEventListeners.getArticlesByUserId(userId);
-=======
-  newsArticleEvents() {
-    articleEventListeners.newArticleEventListener();
-    articleEventListeners.deleteArticle();
-    articleEventListeners.editArticle();
-    articleEventListeners.getArticlesByUserId();
->>>>>>> master
   }
 };
 
