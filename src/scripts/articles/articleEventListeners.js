@@ -2,22 +2,27 @@ import API from "../data.js";
 import newArticleForm from "./articleFormManager.js";
 import renderArticles from "./articleDomManager.js";
 
+<<<<<<< HEAD
 let activeId = 1;
+=======
+const activeId = 4;
+>>>>>>> master
 
 const articleEventListeners = {
   newArticleEventListener() {
     const newArticleBtn = document.getElementById("newArticleBtn");
-    const dashboardEl = document.getElementById("dashboardFormField");
+    const formEl = document.getElementById("dashboardFormField");
 
     newArticleBtn.addEventListener("click", () => {
-      dashboardEl.textContent = "";
-      dashboardEl.innerHTML += newArticleForm();
+      formEl.textContent = "";
+      formEl.innerHTML += newArticleForm();
       articleEventListeners.addSaveArticleEventListener();
       articleEventListeners.cancelForm();
     });
   },
   addSaveArticleEventListener() {
     const recordBtn = document.getElementById("saveArticleBtn");
+    const formEl = document.getElementById("dashboardFormField");
 
     recordBtn.addEventListener("click", () => {
       const newsTitleInput = document.getElementById("newsTitle");
@@ -54,7 +59,11 @@ const articleEventListeners = {
             dashboardEl.textContent = "";
             articleEventListeners.getArticlesByUserId();
           })
-          .then(articleEventListeners.clearForm);
+          .then(() => {
+            articleHiddenIdInput.value = "";
+            articleEventListeners.clearForm();
+            formEl.textContent = "";
+          });
       }
     });
   },
@@ -134,11 +143,19 @@ const articleEventListeners = {
       }
     });
   },
+<<<<<<< HEAD
   newsArticleEvents(userId) {
     articleEventListeners.newArticleEventListener();
     articleEventListeners.deleteArticle();
     articleEventListeners.editArticle();
     articleEventListeners.getArticlesByUserId(userId);
+=======
+  newsArticleEvents() {
+    articleEventListeners.newArticleEventListener();
+    articleEventListeners.deleteArticle();
+    articleEventListeners.editArticle();
+    articleEventListeners.getArticlesByUserId();
+>>>>>>> master
   }
 };
 
