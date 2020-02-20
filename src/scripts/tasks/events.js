@@ -92,12 +92,7 @@ const addDeleteFunctionality = () => {
         }
     })
 }
-// Andy was saying that each time I click on the task name to edit, the keypress event listeners are getting
-// saved to each previous name after the first one runs. Which is why it logs 2 on the 2nd task and then 3 on
-// the 3rd task.
-
-// I'm initializing the keypress event every time a task name is clicked, and that keypress listener is not 
-// going away, which is why they're stacking up...
+// Event listener for when task name clicked on, DOM user interface repopulates with the task being updated.
 const addEditFunctionality = () => {
     taskListContainer.addEventListener("click", event => {
         if (event.target.id.startsWith("editName--")) {
@@ -105,7 +100,7 @@ const addEditFunctionality = () => {
             const dateInputField = document.getElementById("completionDate")
             const objIdToEdit = event.target.id.split("--")[1]
 
-            
+            // Gets the object from DB via id, then adds certain properties back into the DOM form fields.
             API.edit(objIdToEdit, "tasks").then(resp => {
                 nameInputField.value = resp.name
                 dateInputField.value = resp.deadline
@@ -128,22 +123,12 @@ const onKeypress = () => {
             const updatedDate = dateInputField.value
             const hiddenInpField = document.getElementById("hidden-input")
             const hiddenInpFieldId = hiddenInpField.value
-
+            // The hiddenInpFieldId argument is the id that allows API.update() to find the matching obj in DB to be updated.
+            // The activeId argument is defined in main.js, and that is currently a static value representing a logged-in user's fk in the DB.
             const updatedObj = newTaskObj(updatedName, updatedDate, activeId, hiddenInpFieldId)
-
-            // For some reason it's logging this 
             
             API.update(updatedObj, "tasks")
-            
-            // Thinking I need to also repopulate the date inp, this way I can invoke the factory
-            // function that creates an updated obj using 2 arguments... Then I can use PUT with 
-            // that new obj...
-            // const updatedObj = newTaskObj(updatedName, updatedDate)
 
-            // Having trouble PUT(ing) the updated obj b/c the API method is trying to get an ID to 
-            // find the DB obj to update... But my obj factory func doesn't have an ID property...
-            // TODO: Can I somehow use the obj that comes back from API.edit()?
-            // TODO: try a patch API to just update the name w/o whole new object..
             // API.update(updatedObj, "tasks")
         }
     })
