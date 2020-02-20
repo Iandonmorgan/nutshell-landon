@@ -14,11 +14,13 @@ const eventListenersEvents = {
           renderArray.push(object);
         }
         renderHtmlEvents(renderArray);
-        
-      });
 
-      const firstEventOnDom = document.querySelector(".eventOnDom");
-      firstEventOnDom.classList.add("firstEvent");
+      });
+      if (renderArray.length !== 0) {
+
+        const firstEventOnDom = document.querySelector(".eventOnDom");
+        firstEventOnDom.classList.add("firstEvent");
+      }
     });
   },
 
