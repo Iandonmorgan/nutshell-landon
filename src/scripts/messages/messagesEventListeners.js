@@ -1,7 +1,6 @@
 import API from "../data.js";
 import chatMessages from "./domManagerMessages.js";
 
-const containerMessages = document.querySelector("#containerMessages");
 const chatDisplay = `<legend align="right">nutshell Internet Relay Chat (nIRC)™ 2020_v1.2 ©</legend>
                     <div id="chatLog">
                         chat is loading...
@@ -12,11 +11,11 @@ const chatDisplay = `<legend align="right">nutshell Internet Relay Chat (nIRC)�
                     </div>`;
 
 let newMessageContainer = document.querySelector("#container");
-let editInput = "";
 let recentlyEditedId = "";
 
 const messagesListeners = {
     logInListener(userId) {
+        const containerMessages = document.getElementById("containerMessages");
         document.getElementById("chatLogin").addEventListener("click", function () {
             containerMessages.innerHTML = chatDisplay;
             chatMessages.loggedIn(userId);
@@ -55,7 +54,6 @@ const messagesListeners = {
         chatLog.addEventListener("click", function () {
             if (event.target.id.split("--")[0] === "editMessage") {
                 API.edit(`${event.target.id.split("--")[1]}/?_expand=user`, "messages").then(message => {
-                    // console.log(message, userId);
                     let newMessageHTML = `<div id="newMessageHTML"><span id="messageId--${message.id}">${message.user.username}: <input id="newMessage--${message.id}" class="editInput" type="text" value="` + messagesListeners.processMessage(message.message) + `"></input></span><button id="cancelMessage--${message.id}">Cancel</button><button id="saveMessage--${message.id}">Save</button><button id="deleteMessage--${message.id}">Delete</button></div>`;
                     newMessageContainer = document.getElementById(`messageId--${message.id}`).parentNode;
                     newMessageContainer.innerHTML = newMessageHTML;
@@ -90,18 +88,15 @@ const messagesListeners = {
         });
         newMessageContainer.addEventListener('keyup', function (e) {
             if (e.keyCode == 13 && document.querySelector(".editInput") !== null) {
-                // console.log(document.querySelector(".editInput").value);
                 const newEditedMessageObject = {
                     "id": parseInt(recentlyEditedId),
                     "userId": userId,
                     "message": document.querySelector(".editInput").value,
                     "timestamp": Date.now()
                 };
-                // console.log("THIS:" + document.querySelector(".editInput").value);
                 API.get("messages/?_expand=user").then(objects => {
                     for (let object in objects) {
                         if (objects[object].id == newEditedMessageObject.id) {
-                            // console.log(newEditedMessageObject.value);
                             newMessageContainer.innerHTML = `<span id="messageId--${newEditedMessageObject.id}">${objects[object].user.username}: ${document.querySelector(".editInput").value}</span> ${chatMessages.editBtnAdd(newEditedMessageObject, userId)} ${chatMessages.deleteBtnAdd(newEditedMessageObject, userId)}`;
                         }
                     }                    

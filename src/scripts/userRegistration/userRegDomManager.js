@@ -1,8 +1,11 @@
 import userAuthenticationListeners from "./userRegEventListeners.js";
 import API from "../data.js";
+import eventListenersEvents from "../events/eventListeners.js";
+import messagesListeners from "../messages/messagesEventListeners.js";
+import articleEventListeners from "../articles/articleEventListeners.js";
 
 const loggedInHTML = `
-<div id="userLoginPrompt>
+<div id="userLoginPrompt">
 <fieldset id="containerMessages">
 <button id="chatLogin">LOGIN TO CHAT</button>
 <input hidden="true" class="editInput"></input>
@@ -22,6 +25,7 @@ const loggedInHTML = `
 <article id="newsArticles"></article>
 </div>
 `;
+
 const signInPrompt = `
 <fieldset id="signInPrompt">
 <legend align="right">WELCOME TO nUTSHELL</legend>
@@ -35,11 +39,12 @@ const signInPrompt = `
 
 const registerNewUserPrompt = `
 <fieldset id="registerNewUserPrompt">
-<div>name: <input id="registerNewUserNameInput" type="text"></input></div>
-<div>email: <input id="registerNewUserEmailInput" type="text"></input></div>
+<div>username: <input id="registerNewUserNameInput" type="text"></input></div>
+<div>email: <input id="registerNewUserEmailInput" type="email"></input></div>
 <div>password: <input id="registerNewUserPasswordInput" type="password"></input></div>
 <div>confirm password: <input id="registerNewUserConfPasswordInput" type="password"></input></div>
-<div><button id="createNewAccountSubmit">CREATE NEW ACCOUNT</button></div>
+<div>Photo Link (URL): <input id="registerNewUserPhotoURL" type="text"></input></div>
+<div><button id="createNewAcctSubmit">CREATE NEW ACCOUNT</button></div>
 <div><a href="" id="useExistingAccount">login using existing account</a></div>
 <input hidden="true" class="editInput"></input>
 </fieldset>
@@ -54,22 +59,35 @@ const userRegistration = {
         userAuthenticationListeners.loginListener();
     },
     logIn(userNameInput, userPasswordInput) {
+        let userLoginAuth = false;
+        let authUserId = "";
         API.get("users").then(objects => {
-            console.log(objects);
-            console.log(userNameInput);
-            console.log(userPasswordInput);
+            for (let i = 0; i < objects.length; i++) {
+                if (objects[i].email.toUpperCase() === userNameInput.toUpperCase() || objects[i].username.toUpperCase() === userNameInput.toUpperCase()) {
+                    if (objects[i].password === userPasswordInput) {
+                        userLoginAuth = true;
+                        sessionStorage.setItem("user", JSON.stringify(objects[i]));
+                        authUserId = (JSON.parse(sessionStorage.getItem("user"))).id; // use this code to add a conditional somewhere else.... if getItem("user") = null reload login; if getItem("user") has value, load that dashboard.
+                    }
+                }
+            }
+            if (userLoginAuth === true) {
+                userRegistration.authorizedUser(authUserId);
+
+            }
         });
     },
     createNewUser() {
+        event.preventDefault();
         dashboardContainer.innerHTML = registerNewUserPrompt;
+        userAuthenticationListeners.createNewAcctSubmitListener();
         userAuthenticationListeners.logInAsExistingUser();
     },
     authorizedUser(userId) {
         dashboardContainer.innerHTML = loggedInHTML;
-        eventListenersEvents.printEvents();
-        const loggedInUserId = userId;
-        messagesListeners.logInListener(loggedInUserId);
-        articleEventListeners.newsArticleEvents();
+        eventListenersEvents.printEvents(userId);
+        messagesListeners.logInListener(userId);
+        articleEventListeners.newsArticleEvents(userId);
     }
 
 }

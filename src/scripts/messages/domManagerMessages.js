@@ -20,9 +20,11 @@ const chatMessages = {
         }
     },
     loggedIn(userId) {
-        API.get("messages/?_expand=user").then(objects => chatMessages.render(objects, userId));
-        messagesListeners.submitListener(userId);
-        messagesListeners.mutateListener(userId);
+        API.get("messages/?_expand=user").then(objects => {
+            chatMessages.render(objects, userId);
+            messagesListeners.submitListener(userId);
+            messagesListeners.mutateListener(userId);
+        });
     },
     render(messages, userId) {
         const chatLog = document.querySelector("#chatLog");

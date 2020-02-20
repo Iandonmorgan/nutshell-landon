@@ -2,7 +2,7 @@ import API from "../data.js";
 import newArticleForm from "./articleFormManager.js";
 import renderArticles from "./articleDomManager.js";
 
-const activeId = 4;
+let activeId = 1;
 
 const articleEventListeners = {
   newArticleEventListener() {
@@ -112,9 +112,9 @@ const articleEventListeners = {
     synopsisInput.value = "";
     urlInput.value = "";
   },
-  getArticlesByUserId() {
+  getArticlesByUserId(userId) { // landon updated this line
     let renderArray = [];
-
+    activeId = userId; // landon added this line
     API.get("articles").then(articles => {
       articles.map(object => {
         if (object.userId === activeId) {
@@ -134,11 +134,11 @@ const articleEventListeners = {
       }
     });
   },
-  newsArticleEvents() {
+  newsArticleEvents(userId) {
     articleEventListeners.newArticleEventListener();
     articleEventListeners.deleteArticle();
     articleEventListeners.editArticle();
-    articleEventListeners.getArticlesByUserId();
+    articleEventListeners.getArticlesByUserId(userId);
   }
 };
 

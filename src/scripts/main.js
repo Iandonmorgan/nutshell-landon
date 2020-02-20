@@ -1,7 +1,3 @@
-// import eventListenersEvents from "./events/eventListeners.js"
-// import messagesListeners from "./messages/messagesEventListeners.js";
-// import articleEventListeners from "./articles/articleEventListeners.js";
-// import API from "./data.js";
 import userRegistration from "./userRegistration/userRegDomManager.js";
 
 /*

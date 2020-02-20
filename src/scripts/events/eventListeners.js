@@ -2,7 +2,7 @@ import renderHtmlEvents from "./domManagerEvents.js";
 import eventsFormHtml from "./eventsForm.js";
 import API from "../data.js";
 
-const activeId = 3;
+let activeId = 1;
 
 const eventListenersEvents = {
   getAndPrintUserEvents() {
@@ -30,7 +30,8 @@ const eventListenersEvents = {
     eventListenersEvents.cancelEvent();
   },
 
-  printEvents() {
+  printEvents(userId) { // landon updated this line
+    activeId = userId; // landon added this line
     const targetHiddenIdInput = document.getElementById("hiddenUserId");
     targetHiddenIdInput.value = activeId;
     eventListenersEvents.editEvent();
