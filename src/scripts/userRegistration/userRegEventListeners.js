@@ -21,6 +21,9 @@ const userAuthenticationListeners = {
             userRegistration.logIn(userNameInput.value, userPasswordInput.value);
         });
     },
+    logoutListener () {
+        document.getElementById("logoutBtn").addEventListener("click", userRegistration.logout);
+    },
     createNewAcctSubmitListener() {
         const newAcctBtn = document.getElementById("createNewAcctSubmit");
         const userNameInput = document.getElementById("registerNewUserNameInput");
