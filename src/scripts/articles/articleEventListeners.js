@@ -118,7 +118,6 @@ const articleEventListeners = {
     urlInput.value = "";
   },
   getArticlesByUserId(userId) {
-    console.log(userId);
     let renderArray = [];
     activeId = userId;
     API.get("articles").then(articles => {

@@ -12,7 +12,6 @@ const chatDisplay = `<legend align="right">nutshell Internet Relay Chat (nIRC)â„
 
 let newMessageContainer = document.querySelector("#container");
 let recentlyEditedId = "";
-
 const messagesListeners = {
     logInListener(userId) {
         const containerMessages = document.getElementById("containerMessages");
