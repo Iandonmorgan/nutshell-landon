@@ -1,20 +1,20 @@
 import API from "../data.js"
 import {renderForm} from "./dom.js"
-import {newTaskObj, taskListFactory, checkedTaskObj} from "./factory.js"
+import {newTaskObj, taskListFactory} from "./factory.js"
 
 let activeId = ""
 
-// STRETCH GOALS: 1) When save task btn clicked, remove text from the input fields 
+// TODO: When save task btn clicked, remove text from the input fields 
+// TODO: Add a confirm message on delete btn click
 
 const taskBtn = document.querySelector("#tasks")
-const hiddenVal = document.querySelector("#hidden-input")
 const taskListContainer = document.querySelector("#tasks-list")
 
 // This function runs when 'Tasks' btn is clicked, and then opens up all other functions to run afterwards
 const openTasksForm = (id) => {
     taskBtn.addEventListener("click", () => {
+        // value of the id param is passed in in main.js...
         activeId = id;
-        // hiddenVal.value = 1;
         renderForm();
         addSaveFunctionality();
         addViewTasksFunctionality();
@@ -26,8 +26,6 @@ const openTasksForm = (id) => {
 }
 
 const addSaveFunctionality = () => {
-    // Line 22 makes sure 'Tasks' button has been clicked to open form and access save btn
-    // if (parseInt(hiddenVal.value) === "") {
         const saveBtn = document.querySelector("#submitTask")
 
         saveBtn.addEventListener("click", event => {
@@ -38,11 +36,10 @@ const addSaveFunctionality = () => {
         
             API.save(newObj, "tasks")
         })
-    // }
 }
 
-// GET all 'tasks' objs in DB, finds only those whose 'isComplete' property value is false,
-// then converts them to HTML and adds to DOM.
+// GETs 'tasks' objs in DB. Finds only those whose 'isComplete' property value is false, and whose 'userId' property value matches
+// the logged-in user's id value. Then converts these objs to HTML and adds to DOM.
 const addViewTasksFunctionality = () => {
     const viewTasksBtn = document.querySelector("#viewTasks")
 
@@ -57,15 +54,12 @@ const addViewTasksFunctionality = () => {
     })
 }
 
-// Changes 'isComplete' property value in the 'tasks' DB from 'false' to 'true' for whichever item/DB obj's checkbox is clicked
+// Changes 'isComplete' property value in the 'tasks' DB array from 'false' to 'true' for whichever item's checkbox is clicked
 const addCheckboxFunctionality = () => {
     taskListContainer.addEventListener("click", event => {
         if (event.target.id.startsWith("checkbox--")) {
-            // Will be used to get the matching obj in the DB
             const objToEditId = event.target.id.split("--")[1]
 
-            // Now get the matching obj from DB via objToEdit, and then call updateObj API method
-            // and pass in the checkedTaskObj factory fn that creates new obj w/ updated 'isComplete'
             API.edit(objToEditId, "tasks").then(resp => {
                 resp.isComplete = true;
                 API.update(resp, "tasks")
@@ -74,8 +68,8 @@ const addCheckboxFunctionality = () => {
     })
 }
 
-// TODO: Add a confirm message on delete btn click
-// Deletes task from DB and task container in DOM on 'Delete' btn click
+// Deletes task from DB and from task container in DOM on 'Delete' btn click, then re-displays all remaining uncompleted tasks for
+// the matching logged-in user (activeId).
 const addDeleteFunctionality = () => {
     taskListContainer.addEventListener("click", event => {
         if (event.target.id.startsWith("deleteBtn--")) {
@@ -111,6 +105,10 @@ const addEditFunctionality = () => {
     })
 }
 
+// This was my white whale today as I had to remove this keypress event listener from my edit click event function, and then create a 
+// separate function to run the keypress event after the edit event had triggered. Now when I edit the 3rd, 4th, and 5th task, the func
+// is not storing all the previous tasks and changing all their values to the current tasks updated value. Still don't really understand
+// what was happening though...
 const onKeypress = () => {
     const nameInputField = document.getElementById("createTask")
     const dateInputField = document.getElementById("completionDate")
@@ -118,7 +116,7 @@ const onKeypress = () => {
 
     nameInputField.addEventListener("keypress", event => {
         if (event.charCode === 13) {
-            event.preventDefault()
+            // TODO: For some reason I can't edit the date input.. not MVP goal but still weird...
             const updatedName = nameInputField.value
             const updatedDate = dateInputField.value
             const hiddenInpField = document.getElementById("hidden-input")
@@ -128,10 +126,8 @@ const onKeypress = () => {
             const updatedObj = newTaskObj(updatedName, updatedDate, activeId, hiddenInpFieldId)
             
             API.update(updatedObj, "tasks")
-
-            // API.update(updatedObj, "tasks")
         }
     })
 }
 
-export {openTasksForm, activeId}
+export {openTasksForm}

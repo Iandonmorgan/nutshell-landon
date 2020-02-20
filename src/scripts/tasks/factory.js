@@ -1,5 +1,4 @@
-import {activeId} from "./events.js"
-
+// Creates new objs, one for when in save mode, one for edit mode. idVal is hiddenInpId for edit mode.
 const newTaskObj = (val1, val2, activeId, idVal) => {
     if (idVal === undefined) {
         return {
@@ -19,15 +18,6 @@ const newTaskObj = (val1, val2, activeId, idVal) => {
     }
 }
 
-const checkedTaskObj = (val1, val2) => {
-    return {
-        name: val1,
-        deadline: val2,
-        isComplete: true,
-        userId: 1
-    }   
-}
-
 const taskListFactory = (obj) => {
     return `
         <section id="containerTasks--${obj.id}">
@@ -40,4 +30,4 @@ const taskListFactory = (obj) => {
     `
 }
 
-export {newTaskObj, taskListFactory, checkedTaskObj}
+export {newTaskObj, taskListFactory}
