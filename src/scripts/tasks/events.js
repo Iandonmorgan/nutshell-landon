@@ -13,7 +13,7 @@ const taskListContainer = document.querySelector("#tasks-list")
 // This function runs when 'Tasks' btn is clicked, and then opens up all other functions to run afterwards
 const openTasksForm = (id) => {
     taskBtn.addEventListener("click", () => {
-        // value of the id param is passed in in main.js...
+        // value of the id param is passed in in main.js... And multiple functions in this scope use activeId
         activeId = id;
         renderForm();
         addSaveFunctionality();
