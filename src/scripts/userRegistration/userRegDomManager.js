@@ -7,6 +7,7 @@ import openTasksForm from "../tasks/events.js";
 
 const loggedInHTML = `
 <div id="userLoginPrompt">
+    <p align="right"><button type="button" id="logoutBtn">LOGOUT</button></p>
     <fieldset id="containerMessages">
       <button id="chatLogin">LOGIN TO CHAT</button>
       <input hidden="true" class="editInput"></input>
@@ -67,54 +68,78 @@ const registerNewUserPrompt = `
 const dashboardContainer = document.getElementById("container");
 
 const userRegistration = {
-    inputFields() {
-        dashboardContainer.innerHTML = signInPrompt;
-        userAuthenticationListeners.createNewAcctListener();
-        userAuthenticationListeners.loginListener();
-    },
-    logIn(userNameInput, userPasswordInput) {
-        let userLoginAuth = false;
-        let match = "";
-        let authUserId = "";
-        API.get("users").then(objects => {
-            for (let i = 0; i < objects.length; i++) {
-                if (objects[i].email.toUpperCase() === userNameInput.toUpperCase() || objects[i].username.toUpperCase() === userNameInput.toUpperCase()) {
-                    if (objects[i].password === userPasswordInput) {
-                        userLoginAuth = true;
-                        sessionStorage.setItem("user", JSON.stringify(objects[i]));
-                        authUserId = (JSON.parse(sessionStorage.getItem("user"))).id; // use this code to add a conditional somewhere else.... if getItem("user") = null reload login; if getItem("user") has value, load that dashboard.
-                    } else {
-                        document.getElementById("alert").innerHTML = "";
-                        setTimeout(function () { document.getElementById("alert").innerHTML = `While I appreciate your login attempt, I regret to inform you it was unsuccessful as your username and/or your password are incorrect. Please try again.` }, 180);
-                    }
-                }
-                if (userLoginAuth === true) {
-                    userRegistration.authorizedUser(authUserId);
-
-                }
-            }
-            match = (objects.find(obj => obj.email.toUpperCase() === userNameInput.toUpperCase()));
-            match = (objects.find(obj => obj.username.toUpperCase() === userNameInput.toUpperCase()));
-            if (match === undefined) {
-                document.getElementById("alert").innerHTML = "";
-                setTimeout(function () { document.getElementById("alert").innerHTML = `While I appreciate your login attempt, I regret to inform you it was unsuccessful as your username and/or your password are incorrect. Please try again.` }, 180);
-            }
-        });
-    },
-    createNewUser() {
-        event.preventDefault();
-        dashboardContainer.innerHTML = registerNewUserPrompt;
-        userAuthenticationListeners.createNewAcctSubmitListener();
-        userAuthenticationListeners.logInAsExistingUser();
-    },
-    authorizedUser(userId) {
-        dashboardContainer.innerHTML = loggedInHTML;
-        eventListenersEvents.printEvents(userId);
-        messagesListeners.logInListener(userId);
-        articleEventListeners.newsArticleEvents(userId);
-        openTasksForm(userId);
+  inputFields() {
+    if (JSON.parse(sessionStorage.getItem("user")) === null) {
+      dashboardContainer.innerHTML = signInPrompt;
+      userAuthenticationListeners.createNewAcctListener();
+      userAuthenticationListeners.loginListener();
+    } else if (JSON.parse(sessionStorage.getItem("user")).id) {
+      userRegistration.authorizedUser(
+        JSON.parse(sessionStorage.getItem("user")).id
+      );
     }
-
-}
+  },
+  logout() {
+      sessionStorage.clear();
+      userRegistration.inputFields();
+  },
+  logIn(userNameInput, userPasswordInput) {
+    let userLoginAuth = false;
+    let match = "";
+    let authUserId = "";
+    API.get("users").then(objects => {
+      for (let i = 0; i < objects.length; i++) {
+        if (
+          objects[i].email.toUpperCase() === userNameInput.toUpperCase() ||
+          objects[i].username.toUpperCase() === userNameInput.toUpperCase()
+        ) {
+          if (objects[i].password === userPasswordInput) {
+            userLoginAuth = true;
+            sessionStorage.setItem("user", JSON.stringify(objects[i]));
+            authUserId = JSON.parse(sessionStorage.getItem("user")).id; // use this code to add a conditional somewhere else.... if getItem("user") = null reload login; if getItem("user") has value, load that dashboard.
+          } else {
+            document.getElementById("alert").innerHTML = "";
+            setTimeout(function() {
+              document.getElementById(
+                "alert"
+              ).innerHTML = `While I appreciate your login attempt, I regret to inform you it was unsuccessful as your username and/or your password are incorrect. Please try again.`;
+            }, 180);
+          }
+        }
+        if (userLoginAuth === true) {
+          userRegistration.authorizedUser(authUserId);
+        }
+      }
+      match = objects.find(
+        obj => obj.email.toUpperCase() === userNameInput.toUpperCase()
+      );
+      match = objects.find(
+        obj => obj.username.toUpperCase() === userNameInput.toUpperCase()
+      );
+      if (match === undefined) {
+        document.getElementById("alert").innerHTML = "";
+        setTimeout(function() {
+          document.getElementById(
+            "alert"
+          ).innerHTML = `While I appreciate your login attempt, I regret to inform you it was unsuccessful as your username and/or your password are incorrect. Please try again.`;
+        }, 180);
+      }
+    });
+  },
+  createNewUser() {
+    event.preventDefault();
+    dashboardContainer.innerHTML = registerNewUserPrompt;
+    userAuthenticationListeners.createNewAcctSubmitListener();
+    userAuthenticationListeners.logInAsExistingUser();
+  },
+  authorizedUser(userId) {
+    dashboardContainer.innerHTML = loggedInHTML;
+    eventListenersEvents.printEvents(userId);
+    messagesListeners.logInListener(userId);
+    articleEventListeners.newsArticleEvents(userId);
+    openTasksForm(userId);
+    userAuthenticationListeners.logoutListener();
+  }
+};
 
 export default userRegistration;
