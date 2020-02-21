@@ -1,4 +1,4 @@
-# The Pernicious Paydays Nutshell Dashboard
+# Nutshell Dashboard - the Landon version
 ​
 ## Setup: Follow these steps exactly
 ​
